@@ -1,0 +1,39 @@
+{
+  "name": "fiori-remix",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node ./server.js",
+    "start": "cross-env NODE_ENV=production node ./server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "typecheck": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@chakra-ui/react": "^3.4.0",
+    "@emotion/react": "^11.14.0",
+    "@remix-run/express": "^2.15.2",
+    "@remix-run/node": "^2.15.2",
+    "@remix-run/react": "^2.15.2",
+    "cross-env": "^7.0.3",
+    "express": "^4.21.2",
+    "isbot": "^4.4.0",
+    "next-themes": "^0.4.4",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-icons": "^5.4.0",
+    "tiny-invariant": "^1.3.3"
+  },
+  "devDependencies": {
+    "@remix-run/dev": "^2.15.2",
+    "@types/react": "^19.0.7",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.1",
+    "tailwindcss": "^3.4.17",
+    "vite": "^5.4.11"
+  },
+  "type": "module"
+}
