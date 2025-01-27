@@ -6,7 +6,7 @@ interface ValueLostBoxProps {
 
 function ValueLostBox({ value }: ValueLostBoxProps) {
     return (
-        <div className="flex flex-col items-center justify-center bg-white shadow-md rounded-lg p-4 size-24 bg-red-500">
+        <div className="flex flex-col items-center justify-center bg-white rounded-lg p-4 size-24 bg-red-500">
             <span className="value">{value}</span>
             <span className="label">Lost</span>
         </div>
