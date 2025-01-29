@@ -9,20 +9,17 @@ interface CardGridProps {
 
 function CardGrid({ cards, onCardClick }: CardGridProps) {
 
-
-    const nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-
     return (
-    <div className="flex flex-wrap">
-    {cards.map(card => (
-        <CardContainer
-            key={card.id}
-            {...card}
-            onClick={() => onCardClick(card.id)}
-        />
-    ))}
-    </div>
-    ); 
+        <div className="flex flex-wrap justify-center">
+            {cards.map(card => (
+                <CardContainer
+                    key={card.id}
+                    {...card}
+                    onClick={() => onCardClick(card.id)}
+                />
+            ))}
+        </div>
+    );
 };
 
 export default CardGrid;

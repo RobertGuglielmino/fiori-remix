@@ -17,22 +17,22 @@ function CardContainer({ status, text, price, image, onClick }: CardContainerPro
     let cardDisplay;
 
     switch (status) {
-        case "NONE":
-            cardDisplay = <CardBack onClick={onClick} />;
+        case "RIPPED":
+            cardDisplay = <CardRipped image={image} />;
             break;
         case "FLIPPED":
             cardDisplay = <CardFlipped image={image} />;
             break;
         default:
-            cardDisplay = <CardRipped image={image} />;
+            cardDisplay = <CardBack onClick={onClick} />;
             break;
     }
 
     return (
         <div className="flex flex-col items-center p-2 flex-grow-0 flex-shrink-0 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6">
             {cardDisplay}
-            <p>{text}</p>
-            <p>{price}</p>
+            <div>{text}</div>
+            <div>{price}</div>
         </div>
     );
 };

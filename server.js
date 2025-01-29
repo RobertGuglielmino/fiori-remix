@@ -10,7 +10,7 @@ const viteDevServer =
         })
       );
 
-const app = express();lao
+const app = express();
 app.use(
   viteDevServer
     ? viteDevServer.middlewares

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import CardGrid from './CardGrid';
 import { ActionFunctionArgs } from '@remix-run/node';
 import invariant from "tiny-invariant";
+import { useActionData } from '@remix-run/react';
 
 function sendData(n: any) {
     return null;
@@ -27,11 +28,10 @@ interface CardGridContainerProps {
 }
 
 function CardGridContainer({ amountLost, setAmountLost }: CardGridContainerProps) {
-    const [cards, setCards] = useState([
-        { id: 1, status: 'NONE', text: 'Card 1', price: '$1.00', image: 'image1.jpg' },
-        { id: 2, status: 'NONE', text: 'Card 2', price: '$2.00', image: 'image2.jpg' },
-        // Add more cards as needed
-    ]);
+    const actionData: any = useActionData<typeof action>();
+    console.log(actionData);
+    console.log(actionData["body"]);
+    const [cards, setCards] = useState(actionData["body"]["cards"]);
     
     function centsToDollars(amount: number) {
         let unit: number = amount;
@@ -83,7 +83,7 @@ function CardGridContainer({ amountLost, setAmountLost }: CardGridContainerProps
 
 
     return (
-        <div className="p-4">
+        <div className="p-4 mx-10">
             <main>
                 <CardGrid cards={cards} onCardClick={handleCardClick} />
             </main>
