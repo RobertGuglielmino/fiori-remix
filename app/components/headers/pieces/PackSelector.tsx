@@ -1,14 +1,9 @@
 import { Form, useFetcher, useLoaderData } from '@remix-run/react';
 import React, { useState } from 'react';
 import packTypesJson from './packTypes.json';
-import { ActionFunctionArgs, redirect } from '@remix-run/node';
 import { loader } from '~/root';
 
-
-// PROBS URL PARAM
 // ALSO COUPLE SET/PACKTYPES LMAO 
-// WE GOT THIS
-
 
 function generateSetTypes(set: any) {
   return packTypesJson[set].map((type: any) => (<option key={type} value={type}>{formatBoosterType(type)}</option>))
@@ -36,17 +31,19 @@ export default function PackSelector() {
   };
 
   return (
-    <Form action="/open" method="post" className=''>
+    <Form action="/open" method="get" className=''>
       <div className="grid grid-cols-2 h-24 w-48">
         <div className='flex flex-col flex-shrink-1'>
-          <select className=' m-1 w-24 grow bg-slate-200 rounded'
+          <select className='m-1 grow bg-slate-200 rounded'
+            id="set"
+            defaultValue='-'
             onChange={handleSetChange}
             name="set">
-
+            <option key="-" disabled value="-">Pick a Magic Set!</option>
             {packSetTypes.map((set: any) => (<option key={set.setCode} value={set.setCode}>{set.setCode}</option>))}
 
           </select>
-          <select className=' m-1 w-24 grow bg-slate-200 rounded'
+          <select id="pack-type" className='m-1 grow bg-slate-200 rounded'
             disabled={selectedSet === ""}
             name="pack-type">
 
@@ -54,9 +51,9 @@ export default function PackSelector() {
 
           </select>
         </div>
-        <button className='m-1 bg-green-500 hover:bg-green-600 size-24 rounded'
+        <button className='m-1 bg-green-500 hover:bg-green-400 rounded'
           type="submit">
-          GO
+          <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#FFFFFF"><path d="M80-240v-480h66.67v480H80Zm559.33.67L591.67-286l160.66-160.67h-513v-66.66h513L592.67-674l46.66-46.67L880-480 639.33-239.33Z"/></svg>
         </button>
       </div>
     </Form>

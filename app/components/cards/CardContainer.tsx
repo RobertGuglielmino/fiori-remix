@@ -1,38 +1,38 @@
 
 import React from 'react';
-import CardBack from './CardBack';
-import CardFlipped from './CardFlipped';
-import CardRipped from './CardRipped';
+import centsToDollars from './../../utils/centsToDollars';
+import Card from './Card';
 
 interface CardContainerProps {
-    status: string;
+    cardState: string;
     text: string;
-    price: string;
+    price: number;
     image: string;
     onClick: () => void;
 }
 
-function CardContainer({ status, text, price, image, onClick }: CardContainerProps) {
+function CardContainer({ cardState, text, price, image, onClick }: CardContainerProps) {
 
-    let cardDisplay;
+    let cardClassName = '';
+    // console.log(cardState);
 
-    switch (status) {
+    switch (cardState) {
         case "RIPPED":
-            cardDisplay = <CardRipped image={image} />;
+            cardClassName = 'grayscale border-2 border-black'; // Add your custom CSS class for ripped state
             break;
         case "FLIPPED":
-            cardDisplay = <CardFlipped image={image} />;
+            cardClassName = 'flipped-class'; // Add your custom CSS class for flipped state
             break;
         default:
-            cardDisplay = <CardBack onClick={onClick} />;
+            cardClassName = 'grow border-black max-h-fit cursor-pointer transition hover:scale-110 hover:animate-float duration-150 ease-in-out'; // Add your custom CSS class for back state
             break;
     }
 
     return (
-        <div className="flex flex-col items-center p-2 flex-grow-0 flex-shrink-0 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6">
-            {cardDisplay}
-            <div>{text}</div>
-            <div>{price}</div>
+        <div className="flex flex-col items-center border border-gray-300 rounded-lg">
+            {/* <Card newImage={image} onClick={onClick} className={cardClassName} /> */}
+            <div className="font-magic text-center text-sm">wow</div>
+            <div className="font-magic text-center text-sm">{centsToDollars(price)}</div>
         </div>
     );
 };

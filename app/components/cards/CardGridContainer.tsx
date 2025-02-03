@@ -32,6 +32,25 @@ function CardGridContainer({ amountLost, setAmountLost }: CardGridContainerProps
     console.log(actionData);
     console.log(actionData["body"]);
     const [cards, setCards] = useState(actionData["body"]["cards"]);
+
+    const initialCardState = [];
+    for (let i = 0; i < cards.length; i++) {
+        initialCardState.push({id: i, status: 'NONE'});
+    }
+
+    const [cardState, setCardState] = useState(initialCardState);
+
+    const action: string = "FLIP";
+
+    function flippedCard(amount: number) {
+    setAmountSaved(amountSaved + amount);
+    // setAction("RIP");
+    }
+
+    function rippedCard(amount: number) {
+    setAmountLost(amountLost + amount);
+    // setAction("FLIP");
+    }
     
     function centsToDollars(amount: number) {
         let unit: number = amount;
@@ -60,6 +79,7 @@ function CardGridContainer({ amountLost, setAmountLost }: CardGridContainerProps
 
 
     const handleCardClick = (id: number) => {
+        console.log("WE HAVE CLICKED");
         setCards(prevCards => {
             const updatedCards = prevCards.map(card => {
                 if (card.id === id) {
@@ -79,6 +99,19 @@ function CardGridContainer({ amountLost, setAmountLost }: CardGridContainerProps
 
             return updatedCards;
         });
+
+        switch (action) {
+            case "FLIP":
+                flippedCard(cards["id"]["price"]);
+                setCardState(...cardState, {id: id, status: 'FLIPPED'});
+                break;
+            case "RIP":
+                rippedCard(cards["id"]["price"]);
+                setCardState(...cardState, {id: id, status: 'RIPPED'});
+                break;
+            default:
+                break
+        }
     };
 
 

@@ -1,3 +1,57 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "Turbo";
+  src: url("/fonts/full Pack 2025.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Magic";
+  src: url("/fonts/Planewalker-38m6.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.text-fill-green {
+  background-image: linear-gradient(to right, #00ff00, #00ff00);
+}
+
+@layer utilities {
+  .card-grid-item {
+    @apply flex-grow-0 flex-shrink-0 p-2;
+    flex-basis: calc(100% / 8);
+  }
+
+  @screen xl {
+    .card-grid-item {
+      flex-basis: calc(100% / 8);
+    }
+  }
+
+  @screen lg {
+    .card-grid-item {
+      flex-basis: calc(100% / 6);
+    }
+  }
+
+  @screen md {
+    .card-grid-item {
+      flex-basis: calc(100% / 4);
+    }
+  }
+
+  @screen sm {
+    .card-grid-item {
+      flex-basis: calc(100% / 3);
+    }
+  }
+
+  @screen xs {
+    .card-grid-item {
+      flex-basis: calc(100% / 2);
+    }
+  }
+}

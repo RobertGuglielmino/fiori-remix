@@ -38,10 +38,33 @@ export async function loader() {
   return json(packSets);
 }
   
-
 export default function App() {
   const [amountLost, setAmountLost] = useState(0);
+  const [amountSaved, setAmountSaved] = useState(0);
+  const [changeValue, setChangeValue] = useState(100);
+  const [action, setAction] = useState("FLIP");
+
+  function flippedCard(amount: number) {
+    setAmountSaved(amountSaved + amount);
+    setAction("RIP");
+  }
+
+  function rippedCard(amount: number) {
+    setAmountLost(amountLost + amount);
+    setAction("FLIP");
+    setChangeValue(amount); // Example with cents
+  }
+
+  function resetNewPack() {
+
+  }
   
+  const outletFunctions = {
+    flippedCard: flippedCard,
+    rippedCard: rippedCard,
+    action: action
+  }
+
   return (
     <html>
       <head >
@@ -54,14 +77,13 @@ export default function App() {
       </head>
       <body className="w-full">
 
-        <h1 className="object-center">Hello world!</h1>
-        <HeaderContainer />
+        <HeaderContainer amountLost={amountLost} amountSaved={amountSaved} changeValue={changeValue}/>
         
         <Link to="/"> HOME </Link>
         <Link to="/stats"> STATS </Link>
         <Link to="/info"> INFO </Link>
         <button></button>
-        <Outlet />
+        <Outlet context={{...outletFunctions}} />
 
         <Scripts />
       </body>
