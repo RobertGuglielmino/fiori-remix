@@ -3,7 +3,7 @@ import { useState } from 'react';
 import CardContainer from './CardContainer';
 import { ActionFunctionArgs } from '@remix-run/node';
 import invariant from 'tiny-invariant';
-import { useActionData, useLoaderData } from '@remix-run/react';
+import { useActionData, useAsyncValue, useFetcher, useLoaderData } from '@remix-run/react';
 import { loader } from '~/routes/open';
 
 function sendData(n: any) {
@@ -24,25 +24,25 @@ export const action = async ({
 
 interface CardGridProps {
     action: string;
+    allCardsClicked: () => void;
+    cardClickCount: number;
+    incrementCardClick: () => void;
     setAmountLost: (amount: number) => void;
     setAmountSaved: (amount: number) => void;
 }
 
-function CardGrid({ action, setAmountLost, setAmountSaved }: CardGridProps) {
-    // const actionData: any = useActionData<typeof action>();
+function CardGrid({ action, allCardsClicked, cardClickCount, incrementCardClick, setAmountLost, setAmountSaved }: CardGridProps) {
     const loaderData: any = useLoaderData<typeof loader>();
+
+    console.log(loaderData);
+
     const cards = loaderData["body"]["cards"];
 
     const [cardState, setCardState] = useState(initializeCardStateArray(cards.length));
-    const [cardClickCount, setCardClickCount] = useState(0);
-
-    // console.log(loaderData["body"]);
 
     const handleCardClick = (id: number, action: string, numCards: number) => {
 
-        console.log(cards);
-
-        setCardClickCount(cardClickCount + 1);
+        incrementCardClick();
 
         switch (action) {
             case "FLIP":
@@ -64,14 +64,16 @@ function CardGrid({ action, setAmountLost, setAmountSaved }: CardGridProps) {
         }
         if (cardClickCount === numCards - 1) {
             console.log("All cards have been flipped or ripped");
+            allCardsClicked();
             // sendPostRequest();
+            //cardState
         }
     };
 
     return (
-        <div className="flex flex-wrap justify-center sm:px-4 lg:px-24 py-4">
+        <div className="flex flex-wrap justify-center sm:px-4 lg:px-16 py-4">
             {cards.map((card: any, index: number) => (
-                <div key={index} className="grow-0 shrink basis-50 p-2" >
+                <div key={index} className="grow-0 shrink basis-60 p-2" >
                     <CardContainer
                         key={card.index}
                         cardState={cardState[index]["status"]}

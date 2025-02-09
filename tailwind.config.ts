@@ -32,6 +32,10 @@ export default {
       fontFamily: {
         custom: ['Turbo', 'sans-serif'],
         magic: ['Magic', 'sans-serif'],
+        vegas: ['Vegas', 'sans-serif'],
+        kanit: ['Kanit', 'sans-serif'],
+        lora: ['Lora', 'sans-serif'],
+        quicksand: ['Quicksand', 'sans-serif'],
       }
     },
   },

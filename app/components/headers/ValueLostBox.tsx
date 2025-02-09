@@ -49,7 +49,7 @@ const ValueLostBox: React.FC<ValueLostBoxProps> = ({ value, addValue }) => {
   }, [value, addValue, duration, endValue]);
 
   return (
-    <div className='flex flex-col items-center'>
+    <div className='border-black border-2 flex flex-col items-center'>
       <span ref={ref} className="value-lost-box">${previousValueRef.current.toFixed(2)}</span>
     </div>
   );

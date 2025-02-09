@@ -8,10 +8,9 @@ import {
   useLoaderData,
 } from "@remix-run/react"; 
 import stylesheet from "./tailwind.css?url";
-import HeaderContainer from "./components/headers/HeaderContainer";
 import { useState } from "react";
 import invariant from "tiny-invariant";
-import packTypesJson from './routes/packTypes.json';
+import packTypesJson from '../public/models/packTypes.json';
   
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -55,15 +54,18 @@ export default function App() {
     setChangeValue(amount); // Example with cents
   }
 
-  function resetNewPack() {
-
-  }
   
   const outletFunctions = {
     flippedCard: flippedCard,
     rippedCard: rippedCard,
-    action: action
+    action: action,
+    setAction: setAction,
+    amountLost: amountLost,
+    amountSaved: amountSaved,
+    changeValue: changeValue,
   }
+
+        
 
   return (
     <html>
@@ -77,12 +79,6 @@ export default function App() {
       </head>
       <body className="w-full">
 
-        <HeaderContainer amountLost={amountLost} amountSaved={amountSaved} changeValue={changeValue}/>
-        
-        <Link to="/"> HOME </Link>
-        <Link to="/stats"> STATS </Link>
-        <Link to="/info"> INFO </Link>
-        <button></button>
         <Outlet context={{...outletFunctions}} />
 
         <Scripts />

@@ -1,6 +1,6 @@
 import { json, LoaderFunctionArgs } from "@remix-run/node";
 import invariant from "tiny-invariant";
-import packTypesJson from './packTypes.json';
+import packTypesJson from '../../public/models/packTypes.json';
 
 export async function loader({
     params,
