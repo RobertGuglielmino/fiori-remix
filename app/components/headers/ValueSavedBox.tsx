@@ -1,15 +1,17 @@
-import React from 'react';
 import centsToDollars from '../../utils/centsToDollars';
+import {  useFIORI } from '../../FIORIContext';
 
-interface ValueSavedBoxProps {
-    value: number;
-}
+function ValueSavedBox() {
+  const state = useFIORI();
 
-function ValueSavedBox({ value }: ValueSavedBoxProps) {
+    let flipOpacity = (state!.action === "FLIP") || (state!.action === undefined);
+
     return (
-        <div className="border-black border-2 flex flex-col items-center justify-center bg-white rounded-lg p-4 bg-green-500">
-            <span className="value">{centsToDollars(value)}</span>
-            {/* <span className="opacity-25 label">Saved</span> */}
+        <div className='flex-basis-1'>
+            <div className={`opacity-${flipOpacity ? "100" : "25"} flex flex-col items-center justify-center rounded-lg p-4 transition duration-150`}>
+                <span className="font-kanit text-2xl value">{centsToDollars(state!.amountSaved)}</span>
+                <span className="font-kanit text-2xl label">Saved</span>
+            </div>
         </div>
     );
 };

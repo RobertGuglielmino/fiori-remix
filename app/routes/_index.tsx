@@ -31,9 +31,6 @@ export default function Index() {
   // const packSetTypes = ['core', 'expansion', 'draft_innovation', 'masters', 'funny', 'remastered'];
 
   return (<div className="">
-    <div className="place-content-evenly flex items-center flex-row gap-6 mx-4 my-2">
-      <FlipRipDisplay action="NONE"></FlipRipDisplay>
-    </div>
 
     <div className="center m-10">
       <div className="text-center font-quicksand">

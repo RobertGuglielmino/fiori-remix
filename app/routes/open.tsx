@@ -1,8 +1,10 @@
 import { ActionFunctionArgs, defer, json, LoaderFunctionArgs, redirect } from "@remix-run/node";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Await, isRouteErrorResponse, useActionData, useLoaderData, useFetcher, useOutletContext, useRouteError, useSearchParams, useNavigate } from "@remix-run/react";
 import CardGrid from "../components/cards/CardGrid";
 import HeaderContainer from "../components/headers/HeaderContainer";
+import { ReducerActions } from "../constants/ActionTypes";
+import { useFIORI, useFIORIDispatch } from "../FIORIContext";
 
 export async function loader({
   request,
@@ -87,15 +89,16 @@ export async function action({ request }: ActionFunctionArgs) {
 }
 
 
+
 interface OutletContextType {
   action: string;
   setAction: (action: string) => void;
   amountLost: number;
   amountSaved: number;
   changeValue: number;
-  allCardsClicked: () => void;
   rippedCard: (amount: number) => void;
   flippedCard: (amount: number) => void;
+  setPackState: (state: string) => void;
   // Add other properties as needed
 }
 
@@ -105,44 +108,31 @@ export default function Open() {
   const [packFullyOpened, setPackFullyOpened] = useState(false);
   const [cardClickCount, setCardClickCount] = useState(0);
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const dispatch = useFIORIDispatch();
+  const state = useFIORI();
 
-  function allCardsClicked() {
-    console.log("All cards have been flipped or ripped");
-    setPackFullyOpened(true);
+  function updatePackState(state: string) {
+    dispatch!({
+      type: ReducerActions.PACK_STATE,
+      payload: {
+        action: state,
+      }
+    });
   }
 
   function incrementCardClick() {
     setCardClickCount(cardClickCount + 1);
   }
 
-  function resetNewPack() {
-    // call api
-    navigate(`/open?${searchParams.toString()}`);
-    outletContext.setAction("FLIP");
-    setCardClickCount(0);
-  }
-
-  function fetchNewPack() {
-    
-  }
+  useEffect(() => {
+    updatePackState('FLIP');
+  }, []);
 
   return (
     <div className='' id="index-page">
-      <HeaderContainer
-        action={outletContext.action}
-        amountLost={outletContext.amountLost}
-        amountSaved={outletContext.amountSaved}
-        changeValue={outletContext.changeValue}
-        fetchNewPack={() => resetNewPack()}
-        packFullyOpened={packFullyOpened} />
       <CardGrid
-        action={outletContext.action}
-        allCardsClicked={() => allCardsClicked()}
         cardClickCount={cardClickCount}
-        incrementCardClick={() => incrementCardClick()}
-        setAmountLost={(amount) => outletContext.rippedCard(amount)}
-        setAmountSaved={(amount) => outletContext.flippedCard(amount)} />
+        incrementCardClick={() => incrementCardClick()} />
     </div>
   );
 }

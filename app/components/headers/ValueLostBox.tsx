@@ -1,56 +1,60 @@
-import React, { useEffect, useRef } from 'react';
-
-interface ValueLostBoxProps {
-  value: number;
-  addValue: number;
-}
+import centsToDollars from '../../utils/centsToDollars';
+import { useFIORI } from '../../FIORIContext';
 
 const easeIn = (t: number) => t * t;
 
-const ValueLostBox: React.FC<ValueLostBoxProps> = ({ value, addValue }) => {
-  const ref = useRef<HTMLSpanElement>(null);
-  const startTimeRef = useRef<number | null>(null);
-  const previousValueRef = useRef<number>(value);
-  const endValue = value + addValue;
+function ValueLostBox() {
+  const state = useFIORI();
 
-  const duration = 0.3;
+  // const ref = useRef<HTMLSpanElement>(null);
+  // const startTimeRef = useRef<number | null>(null);
+  // // const previousValueRef = useRef<number>(value);
+  // // const endValue = value + addValue;
 
-  useEffect(() => {
-    const previousValue = previousValueRef.current;
-    if (previousValue === endValue) return;
+  // const duration = 0.3;
 
-    let current = previousValue;
+  // useEffect(() => {
+  //   const previousValue = previousValueRef.current;
+  //   if (previousValue === endValue) return;
 
-    const step = (timestamp: number) => {
-      // console.log("===============");
-      // console.log("ref :", ref.current);
-      // console.log("startTimeRef :", startTimeRef.current);
-      // console.log("previousValueRef :", previousValueRef.current);
-      // console.log("timestamp :", timestamp);
-      if (!startTimeRef.current) startTimeRef.current = timestamp;
+  //   let current = previousValue;
 
-      const progress = Math.min((timestamp - startTimeRef.current) / (duration * 1000), 1);
+  //   const step = (timestamp: number) => {
+  //     // console.log("===============");
+  //     // console.log("ref :", ref.current);
+  //     // console.log("startTimeRef :", startTimeRef.current);
+  //     // console.log("previousValueRef :", previousValueRef.current);
+  //     // console.log("timestamp :", timestamp);
+  //     if (!startTimeRef.current) startTimeRef.current = timestamp;
 
-      current = previousValue + ((endValue - previousValue) * easeIn(progress));
-      if (ref.current) ref.current.textContent = `$${current.toFixed(2)}`;
+  //     const progress = Math.min((timestamp - startTimeRef.current) / (duration * 1000), 1);
 
-      if (progress < 1) {
-        requestAnimationFrame(step);
-      } else {
-        previousValueRef.current = endValue;
-      }
-    };
+  //     current = previousValue + ((endValue - previousValue) * easeIn(progress));
+  //     if (ref.current) ref.current.textContent = `$${current.toFixed(2)}`;
 
-    requestAnimationFrame(step);
+  //     if (progress < 1) {
+  //       requestAnimationFrame(step);
+  //     } else {
+  //       previousValueRef.current = endValue;
+  //     }
+  //   };
 
-    return () => {
-      startTimeRef.current = null;
-    };
-  }, [value, addValue, duration, endValue]);
+  //   requestAnimationFrame(step);
+
+  //   return () => {
+  //     startTimeRef.current = null;
+  //   };
+  // }, [ addValue, duration]);
+
+  let flipOpacity = (state!.action === "RIP") || (state!.action === undefined);
 
   return (
-    <div className='border-black border-2 flex flex-col items-center'>
-      <span ref={ref} className="value-lost-box">${previousValueRef.current.toFixed(2)}</span>
+    <div className='flex-basis-1'>
+      <div className={`opacity-${flipOpacity ? "25" : "100"} flex flex-col items-center justify-center rounded-lg p-4 transition duration-150`}>
+        {/* <span ref={ref} className="value-lost-box">${previousValueRef.current.toFixed(2)}</span> */}
+        <span className="font-kanit text-2xl value-lost-box">{centsToDollars(state!.amountLost)}</span>
+        <span className="font-kanit text-2xl label">Lost</span>
+      </div>
     </div>
   );
 };

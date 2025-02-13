@@ -5,6 +5,8 @@ import { ActionFunctionArgs } from '@remix-run/node';
 import invariant from 'tiny-invariant';
 import { useActionData, useAsyncValue, useFetcher, useLoaderData } from '@remix-run/react';
 import { loader } from '~/routes/open';
+import { useFIORI, useFIORIDispatch } from '../../FIORIContext';
+import { ReducerActions } from '../../constants/ActionTypes';
 
 function sendData(n: any) {
     return null;
@@ -23,48 +25,50 @@ export const action = async ({
 };
 
 interface CardGridProps {
-    action: string;
     allCardsClicked: () => void;
     cardClickCount: number;
     incrementCardClick: () => void;
-    setAmountLost: (amount: number) => void;
-    setAmountSaved: (amount: number) => void;
 }
 
-function CardGrid({ action, allCardsClicked, cardClickCount, incrementCardClick, setAmountLost, setAmountSaved }: CardGridProps) {
-    const loaderData: any = useLoaderData<typeof loader>();
 
-    console.log(loaderData);
+function CardGrid({ allCardsClicked, cardClickCount, incrementCardClick }: CardGridProps) {
+    const loaderData: any = useLoaderData<typeof loader>();
+    const dispatch = useFIORIDispatch();
+    const state = useFIORI();
+
+    // console.log(loaderData);
+    // console.log(state);
 
     const cards = loaderData["body"]["cards"];
 
     const [cardState, setCardState] = useState(initializeCardStateArray(cards.length));
+    console.log(allCardsTouched(cardState));
 
     const handleCardClick = (id: number, action: string, numCards: number) => {
-
         incrementCardClick();
 
         switch (action) {
             case "FLIP":
-                setAmountSaved(cards[id]["cents"]);
+                handleFlipCard(cards[id]["cents"]);
                 const flipCards = cardState.map((card) => {
                     return card.id === id ? { id: id, status: 'FLIPPED', rotation: 0, maskImage: -1 } : card;
                 });
                 setCardState(flipCards);
                 break;
             case "RIP":
-                setAmountLost(cards[id]["cents"]);
+                handleRipCard(cards[id]["cents"]);
                 const ripCards = cardState.map((card) => {
                     return card.id === id ? { id: id, status: 'RIPPED', rotation: getRandomRotation(), maskImage: getRandomMask() } : card;
                 });
                 setCardState(ripCards);
                 break;
             default:
-                break
+                break;
         }
-        if (cardClickCount === numCards - 1) {
+        if (allCardsTouched(cardState)) {
             console.log("All cards have been flipped or ripped");
-            allCardsClicked();
+            handleNewPack();
+            //setCardState(initializeCardStateArray(cards.length));
             // sendPostRequest();
             //cardState
         }
@@ -78,12 +82,48 @@ function CardGrid({ action, allCardsClicked, cardClickCount, incrementCardClick,
                         key={card.index}
                         cardState={cardState[index]["status"]}
                         {...card}
-                        onClick={() => handleCardClick(index, action, cardState.length)}
+                        handleCardClick={() => handleCardClick(index, state!.action, cardState.length)}
                     />
                 </div>
             ))}
         </div>
     );
+
+    function handleFlipCard(amount: number) {
+        dispatch!({
+            type: ReducerActions.FLIP_CARD,
+            payload: {
+                amountSaved: amount
+            }
+        });
+    }
+
+    function handleRipCard(amount: number) {
+        dispatch!({
+            type: ReducerActions.RIP_CARD,
+            payload: {
+                amountLost: amount
+            }
+        });
+    }
+
+    function handleNewPack() {
+        dispatch!({
+            type: ReducerActions.PACK_STATE,
+            payload: {
+                action: 'END'
+            }
+        });
+    }
+
+    function handleLossValueIncrease(amount: number) {
+        dispatch({
+            type: ReducerActions.ADD_TO_LOST,
+            payload: {
+                amount: amount,
+            }
+        });
+    }
 };
 
 
@@ -108,5 +148,8 @@ function getRandomMask() {
     return Math.floor(Math.random() * 5);
 };
 
+function allCardsTouched(cardState: any) {
+    return cardState.filter((card: any) => { return card["status"] == "NONE"}).length == 0
+}
 
 export default CardGrid;

@@ -7,10 +7,10 @@ interface CardContainerProps {
     name: string;
     cents: number;
     image: string;
-    onClick: () => void;
+    handleCardClick: () => void;
 }
 
-function CardContainer({ cardState, name, cents, image, onClick }: CardContainerProps) {
+function CardContainer({ cardState, name, cents, image, handleCardClick }: CardContainerProps) {
 
     const NUM_MASKS = 5;
 
@@ -49,11 +49,9 @@ function CardContainer({ cardState, name, cents, image, onClick }: CardContainer
             break;
     }
 
-//(input) => setCardEffectInfo({...cardEffectInfo, maskPosition: input})
-
     return (
         <div className="flex flex-col items-center border border-gray-300 rounded-lg">
-            <Card newImage={image} setMaskPosition={() => hidden} onClick={onClick} className={cardClassName} />
+            <Card newImage={image} setMaskPosition={() => hidden} handleCardClick={() => handleCardClick()} className={cardClassName} />
             <div className=" font-kanit text-center text-sm">{revealed ? name : nonBreakingSpace}</div>
             <div className=" font-kanit text-center text-sm">{revealed ? centsToDollars(cents) : nonBreakingSpace }</div>
         </div>
