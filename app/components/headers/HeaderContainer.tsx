@@ -1,26 +1,24 @@
 
 import ValueLostBox from './ValueLostBox';
 import ValueSavedBox from './ValueSavedBox';
-import PackSelector from '../PackSelector';
 import FlipRipDisplay from './FlipRipDisplay';
 import { useContext, useState } from 'react';
-import centsToDollars from './../../utils/centsToDollars';
-import { Link, useFetcher, useNavigate, useSearchParams } from '@remix-run/react';
 import PlayAgainButton from '../buttons/PlayAgainButton';
 import HomeButton from '../buttons/HomeButton';
 import Hidden from '../Hidden';
 import { useFIORI } from '../../FIORIContext';
-
+import { useLocation, useResolvedPath } from '@remix-run/react';
 
 interface HeaderContainerProps {
     changeValue: number;
-    fetchNewPack: () => void;
 }
 
-function HeaderContainer({ changeValue, fetchNewPack }: HeaderContainerProps) {
+function HeaderContainer({ changeValue }: HeaderContainerProps) {
     const state = useFIORI();
+    const path = useLocation();
+    
 
-    let packGenerated = state!.action !== "NONE";
+    let packGenerated = path.pathname === "/open";
     let packFullyOpened = state!.action === "END";
 
     return (
@@ -33,14 +31,14 @@ function HeaderContainer({ changeValue, fetchNewPack }: HeaderContainerProps) {
                 <ValueSavedBox  />
             </Hidden>
 
-            <FlipRipDisplay></FlipRipDisplay>
+            <FlipRipDisplay />
 
             <Hidden unless={packGenerated}>
                 <ValueLostBox  />
             </Hidden>
 
             <Hidden unless={packFullyOpened}>
-                <PlayAgainButton fetchNewPack={fetchNewPack} />
+                <PlayAgainButton />
             </Hidden>
         </div>
     );

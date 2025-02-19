@@ -1,8 +1,8 @@
 import centsToDollars from '../../utils/centsToDollars';
-import {  useFIORI } from '../../FIORIContext';
+import { useFIORI } from '../../FIORIContext';
 
 function ValueSavedBox() {
-  const state = useFIORI();
+    const state = useFIORI();
 
     let flipOpacity = (state!.action === "FLIP") || (state!.action === undefined);
 

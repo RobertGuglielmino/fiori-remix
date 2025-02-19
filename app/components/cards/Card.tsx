@@ -1,48 +1,19 @@
 import React, { Dispatch, useContext, useReducer, useRef, useState } from 'react';
 import cardBack from '../../../images/mtg_back.png'
 import { FIORIContext, useFIORIDispatch } from '../../FIORIContext';
-import { ReducerActions } from '../../constants/ActionTypes';
 
 interface CardProps {
     newImage: string;
     handleCardClick: () => void;
-    className?: string;
+    cardClassName?: string;
     setMaskPosition: (maskPosition: string) => void;
 }
 
-const getRandomRotation = () => {
-  return Math.floor(Math.random() * 9) - 4; // Generates an integer between -4 and 4 inclusive
-};
-
-
-function Card({ newImage, handleCardClick, className, setMaskPosition }: CardProps) {
+function Card({ newImage, handleCardClick, cardClassName, setMaskPosition }: CardProps) {
 
     const [image, setImage] = useState(cardBack);
-    const [rotation, setRotation] = useState(0);
     const state = useContext(FIORIContext);
-    const dispatch = useFIORIDispatch();
     const maskPosition = useRef('0px 0px');
-
-
-    function handleFlipCard(amount: number) {
-        dispatch!({
-            type: ReducerActions.FLIP_CARD,
-            payload: {
-                action: "FLIP",
-                amountSaved: amount
-            }
-        });
-    }
-
-    function handleRipCard(amount: number) {
-        dispatch!({
-            type: ReducerActions.RIP_CARD,
-            payload: {
-                action: "RIP",
-                amountSaved: amount
-            }
-        });
-    }
 
     const handleClick = (event: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
         if (image === cardBack) {
@@ -54,7 +25,6 @@ function Card({ newImage, handleCardClick, className, setMaskPosition }: CardPro
             console.log(`${xPercent}% ${yPercent}%`);
             handleCardClick();
             setImage(newImage);
-            setRotation(getRandomRotation());
         }
     };
 
@@ -62,7 +32,7 @@ function Card({ newImage, handleCardClick, className, setMaskPosition }: CardPro
         <img
             src={image}
             alt="Card"
-            className={`h-311 w-233 object-fill rounded-xl cursor-pointer transition duration-150 ease-in-out rotate-[${rotation}deg] ${className}`}
+            className={`h-311 w-233 object-fill rounded-xl cursor-pointer transition duration-150 ease-in-out ${cardClassName}`}
             onClick={(e) => handleClick(e)}
         />
     );

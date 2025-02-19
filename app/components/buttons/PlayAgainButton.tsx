@@ -1,27 +1,28 @@
+import { useNavigate, useSearchParams } from "@remix-run/react";
 import { useFIORIDispatch } from "../../FIORIContext";
 import { ReducerActions } from "../../constants/ActionTypes";
 
-interface PlayAgainButtonProps {
-    fetchNewPack: () => void
-}
-
-export default function PlayAgainButton({ fetchNewPack }: PlayAgainButtonProps) {
+export default function PlayAgainButton() {
     const dispatch = useFIORIDispatch();
-    
-    function updatePackState(state: string) {
-        dispatch!({
-            type: ReducerActions.PACK_STATE,
-            payload: {
-                action: state,
-            }
-        });
+    const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams();
 
+    function updatePackState() {
+        dispatch!({
+            type: ReducerActions.PACK_STARTED,
+            payload: {}
+        });
     }
-    
+
+
     function buttonClick() {
-        updatePackState("FLIP");
-        fetchNewPack();
+        updatePackState();
+        // call api
+        navigate(`/open?${searchParams.toString()}`, {
+            replace: true
+        });
     }
+
 
     return (
         <button onClick={() => buttonClick()} className='flex-basis-0 bg-yellow-600 hover:bg-yellow-500 active:bg-yellow-700 size-24 rounded'>

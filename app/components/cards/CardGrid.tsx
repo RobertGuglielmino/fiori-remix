@@ -1,131 +1,134 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CardContainer from './CardContainer';
-import { ActionFunctionArgs } from '@remix-run/node';
 import invariant from 'tiny-invariant';
-import { useActionData, useAsyncValue, useFetcher, useLoaderData } from '@remix-run/react';
-import { loader } from '~/routes/open';
+import { useLoaderData, useNavigation } from '@remix-run/react';
 import { useFIORI, useFIORIDispatch } from '../../FIORIContext';
 import { ReducerActions } from '../../constants/ActionTypes';
+import { loader } from '../../routes/open';
+
+interface Card {
+    id: number,
+    status: string,
+    rotation: number,
+    maskImage: number,
+}
 
 function sendData(n: any) {
     return null;
 }
 
-export const action = async ({
-    params,
-    request,
-}: ActionFunctionArgs) => {
-    invariant(params.contactId, "Missing contactId param");
-    const formData = await request.formData();
-    return sendData({
-        set: formData.get("set"),
-        packType: formData.get("pack-type"),
-    });
-};
-
-interface CardGridProps {
-    allCardsClicked: () => void;
-    cardClickCount: number;
-    incrementCardClick: () => void;
-}
-
-
-function CardGrid({ allCardsClicked, cardClickCount, incrementCardClick }: CardGridProps) {
-    const loaderData: any = useLoaderData<typeof loader>();
+function CardGrid() {
     const dispatch = useFIORIDispatch();
     const state = useFIORI();
 
-    // console.log(loaderData);
-    // console.log(state);
+    const cards = useLoaderData<typeof loader>()["body"]["cards"];
+    const [packState, setPackState] = useState<any>(initializeCardStateArray(cards.length));
 
-    const cards = loaderData["body"]["cards"];
-
-    const [cardState, setCardState] = useState(initializeCardStateArray(cards.length));
-    console.log(allCardsTouched(cardState));
-
-    const handleCardClick = (id: number, action: string, numCards: number) => {
-        incrementCardClick();
-
+    const handleCardClick = (id: number, action: string) => {
         switch (action) {
             case "FLIP":
-                handleFlipCard(cards[id]["cents"]);
-                const flipCards = cardState.map((card) => {
-                    return card.id === id ? { id: id, status: 'FLIPPED', rotation: 0, maskImage: -1 } : card;
-                });
-                setCardState(flipCards);
+                flipCard(id);
                 break;
             case "RIP":
-                handleRipCard(cards[id]["cents"]);
-                const ripCards = cardState.map((card) => {
-                    return card.id === id ? { id: id, status: 'RIPPED', rotation: getRandomRotation(), maskImage: getRandomMask() } : card;
-                });
-                setCardState(ripCards);
+                ripCard(id);
                 break;
             default:
                 break;
         }
-        if (allCardsTouched(cardState)) {
-            console.log("All cards have been flipped or ripped");
-            handleNewPack();
-            //setCardState(initializeCardStateArray(cards.length));
-            // sendPostRequest();
-            //cardState
-        }
     };
 
     return (
-        <div className="flex flex-wrap justify-center sm:px-4 lg:px-16 py-4">
-            {cards.map((card: any, index: number) => (
-                <div key={index} className="grow-0 shrink basis-60 p-2" >
-                    <CardContainer
-                        key={card.index}
-                        cardState={cardState[index]["status"]}
-                        {...card}
-                        handleCardClick={() => handleCardClick(index, state!.action, cardState.length)}
-                    />
-                </div>
-            ))}
+        <div key={cards} className="flex flex-wrap justify-center sm:px-4 lg:px-16 py-4">
+            {
+                cards.map((card: any, index: number) => {
+                    return <div className="grow-0 shrink basis-60 p-2" >
+                        <CardContainer
+                            key={card}
+                            index={index}
+                            {...card}
+                            status={packState[index].status}
+                            rotation={packState[index].rotation}
+                            maskImage={packState[index].maskImage}
+                            handleCardClick={() => handleCardClick(index, state!.action)}
+                        />
+                    </div>
+                })
+            }
         </div>
     );
 
-    function handleFlipCard(amount: number) {
+    function flipCard(id: number) {
+        const amount = cards[id]["cents"];
+
+        // sets local state for each Card 
+        setPackState(
+            packState.map((card: Card) => {
+                return card.id === id ? { id: id, status: 'FLIPPED', rotation: 0, maskImage: -1 } : card;
+            })
+        )
+
+        // sets global state for header display 
         dispatch!({
             type: ReducerActions.FLIP_CARD,
             payload: {
                 amountSaved: amount
             }
         });
+
+        // checks if the entire pack has been opened
+        cardStateHandler();
     }
 
-    function handleRipCard(amount: number) {
+    function ripCard(id: number) {
+        const amount = cards[id]["cents"];
+
+        // sets local state for each Card 
+        setPackState(
+            packState.map((card: Card) => {
+                return card.id === id ? { id: id, status: 'RIPPED', rotation: 0, maskImage: -1 } : card;
+            })
+        )
+        
+        // sets global state for header display 
         dispatch!({
             type: ReducerActions.RIP_CARD,
             payload: {
                 amountLost: amount
             }
         });
+
+        // checks if the entire pack has been opened
+        cardStateHandler();
+    }
+
+    function cardStateHandler() {
+        if (allCardsTouched(packState)) {
+            console.log("All cards have been flipped or ripped");
+            handleNewPack();
+            handlePackCompletion();
+            //setCardState(initializeCardStateArray(cards.length));
+            // sendPostRequest();
+            //cardState
+        }
     }
 
     function handleNewPack() {
         dispatch!({
             type: ReducerActions.PACK_STATE,
             payload: {
-                action: 'END'
+                action: "END"
             }
         });
     }
 
-    function handleLossValueIncrease(amount: number) {
-        dispatch({
-            type: ReducerActions.ADD_TO_LOST,
-            payload: {
-                amount: amount,
-            }
+    function handlePackCompletion() {
+        dispatch!({
+            type: ReducerActions.PACK_COMPLETED,
+            payload: {}
         });
     }
 };
-
 
 function initializeCardStateArray(size: number) {
     const arr = [];
@@ -133,8 +136,8 @@ function initializeCardStateArray(size: number) {
         arr.push({
             id: i,
             status: 'NONE',
-            rotation: 0,
-            maskImage: -1
+            rotation: getRandomRotation(),
+            maskImage: getRandomMask()
         });
     }
     return arr;
@@ -149,7 +152,8 @@ function getRandomMask() {
 };
 
 function allCardsTouched(cardState: any) {
-    return cardState.filter((card: any) => { return card["status"] == "NONE"}).length == 0
+    // this reads before the last state is set from NONE. we check for 1 bc i dont want to debug this now.
+    return cardState.filter((card: any) => { return card["status"] == "NONE" }).length == 1
 }
 
 export default CardGrid;

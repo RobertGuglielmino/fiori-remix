@@ -6,7 +6,6 @@ export default function HomeButton() {
     const navigate = useNavigate();
     const dispatch = useFIORIDispatch();
 
-
     function updatePackState(state: string) {
         dispatch!({
             type: ReducerActions.PACK_STATE,
@@ -14,7 +13,6 @@ export default function HomeButton() {
                 action: state,
             }
         });
-
     }
     
     function buttonClick() {

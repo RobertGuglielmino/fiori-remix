@@ -4,5 +4,9 @@ export const enum ReducerActions {
     PACK_STATE,
     NEW_PACK,
     FLIP_CARD,
-    RIP_CARD
+    RIP_CARD,
+    RESET_PACK_STATE,
+    UPDATE_PACK_STATE,
+    PACK_COMPLETED,
+    PACK_STARTED,
   }

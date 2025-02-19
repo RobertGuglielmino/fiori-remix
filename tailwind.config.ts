@@ -39,6 +39,8 @@ export default {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('@lostisworld/tailwind-mask'),
+  ],
   darkMode: 'selector',
 } satisfies Config
