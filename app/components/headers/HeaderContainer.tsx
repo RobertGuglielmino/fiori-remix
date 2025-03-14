@@ -5,7 +5,7 @@ import FlipRipDisplay from './FlipRipDisplay';
 import { useContext, useState } from 'react';
 import PlayAgainButton from '../buttons/PlayAgainButton';
 import HomeButton from '../buttons/HomeButton';
-import Hidden from '../Hidden';
+import Hidden from '../cardEffects/Hidden';
 import { useFIORI } from '../../FIORIContext';
 import { useLocation, useResolvedPath } from '@remix-run/react';
 

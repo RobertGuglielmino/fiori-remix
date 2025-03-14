@@ -1,34 +1,44 @@
 import { Form, useFetcher, useLoaderData } from '@remix-run/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import packTypesJson from '../../public/models/packTypes.json';
-import { loader } from '~/root';
+import { loader } from '~/routes/_index';
+import { useFIORI, useFIORIDispatch } from '../FIORIContext';
+import { ReducerActions } from '../constants/ActionTypes';
 
-// ALSO COUPLE SET/PACKTYPES LMAO 
-
-function generateSetTypes(set: keyof typeof packTypesJson) {
-  return packTypesJson[set].map((type: any) => (<option key={type} value={type}>{formatBoosterType(type)}</option>))
-}
 
 function formatBoosterType(type: any) {
   const words = type.split("-");
   for (let i = 0; i < words.length; i++) {
     words[i] = words[i][0].toUpperCase() + words[i].substr(1);
   }
-  words.join(" ");
 
-  return words;
+  return words.join(" ");
 }
 
 
 export default function PackSelector() {
-  const setInfo = useLoaderData();
-  const fetcher = useFetcher();
-  const [selectedSet, setSelectedSet] = useState<string>("");
   const packSetTypes = useLoaderData<typeof loader>();
+  const formattedRes = Object.getOwnPropertyNames(packSetTypes).map(
+    (key) => { return { [key]: packSetTypes[key] }; }
+  );
+  const [selectedSet, setSelectedSet] = useState<string>("");
+  const setKeys = Object.keys(packSetTypes);
+  const dispatch = useFIORIDispatch();
+  const state = useFIORI();
 
-  function handleSetChange(event: React.ChangeEvent<HTMLSelectElement>) {
-    setSelectedSet(event.target.value);
-  };
+  function generateSetTypes(set: string) {
+    console.log(packSetTypes[set]);
+    return packSetTypes[set].map((type: any) => (<option key={type} value={type}>{formatBoosterType(type)}</option>))
+  }
+
+  function handleButtonPress() {
+    // dispatch!({
+    //   type: ReducerActions.PACK_STATE,
+    //   payload: {
+    //     action: "FLIP"
+    //   }
+    // });
+  }
 
   return (
     <Form action="/open" method="get" className=''>
@@ -38,18 +48,19 @@ export default function PackSelector() {
             id="set"
             name="set"
             defaultValue='-'
-            onChange={handleSetChange}>
+            onChange={(e) => {
+              setSelectedSet(e.target.value);
+            }}>
 
             <option key="-" disabled value="-">Pick a Magic Set!</option>
-            {packSetTypes.map((set: any) => (<option key={set.setCode} value={set.setCode}>{set.setCode}</option>))}
-
+            { setKeys.map((set: any) => (<option key={set} value={set}>{set}</option>)) }
           </select>
           <select className='m-1 grow bg-slate-200 rounded'
             id="pack-type"
             name="pack-type"
             disabled={selectedSet === ""}>
 
-            {selectedSet === "" ? <option key="-" value="-">-</option> : generateSetTypes(selectedSet as keyof typeof packTypesJson)}
+            {selectedSet === "" ? <option key="-" value="-">-</option> : generateSetTypes(selectedSet)}
 
           </select>
         </div>

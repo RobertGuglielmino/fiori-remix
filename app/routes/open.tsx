@@ -27,7 +27,6 @@ export async function loader({
     },
   }).then(async res => {
     const data = await res.json();
-    console.log("Loader data received:", data);
     return data;
   });
 
@@ -97,6 +96,10 @@ export default function Open() {
   const navigate = useNavigate();
   const dispatch = useFIORIDispatch();
   const state = useFIORI();
+
+  const cards = useLoaderData<typeof loader>();
+
+  console.log(cards);
 
   return (
     <div className='' id="index-page">

@@ -9,6 +9,7 @@ interface State {
     amountLost: number;
     amountSaved: number;
     packCompleted: boolean;
+    hardMode: boolean;
     packState: any;
 }
 
@@ -107,6 +108,12 @@ function packStarted(state: State): State {
         packCompleted: false
     }
 }
+function setHardMode(state: State, action: any): State {
+    return {
+        ...state,
+        hardMode: action.hardMode
+    }
+}
 
 
 export function FIORIProvider({ children }: any) {
@@ -115,6 +122,7 @@ export function FIORIProvider({ children }: any) {
         amountLost: 0,
         amountSaved: 0,
         packCompleted: false,
+        hardMode: false,
         packState: [{
             id: 0,
             status: 'NONE',
@@ -134,6 +142,7 @@ export function FIORIProvider({ children }: any) {
         [ReducerActions.RESET_PACK_STATE, (state, action) => resetPackState(state, action)],
         [ReducerActions.PACK_COMPLETED, (state, _) => packCompleted(state)],
         [ReducerActions.PACK_STARTED, (state, _) => packStarted(state)],
+        [ReducerActions.SET_HARD_MODE, (state, _) => packStarted(state)],
 
     ]);
 

@@ -6,6 +6,7 @@ import { useLoaderData, useNavigation } from '@remix-run/react';
 import { useFIORI, useFIORIDispatch } from '../../FIORIContext';
 import { ReducerActions } from '../../constants/ActionTypes';
 import { loader } from '../../routes/open';
+import getUserId  from "~/localStorage.client";
 
 interface Card {
     id: number,
@@ -14,15 +15,30 @@ interface Card {
     maskImage: number,
 }
 
-function sendData(n: any) {
-    return null;
+async function sendStatsData(packState: any, userId: string, packId: string) {
+    let response = await fetch("https://s8ib0k5c81.execute-api.us-east-1.amazonaws.com/prod/flip-or-rip-lambda/stats", {
+      method: 'POST',
+      body: JSON.stringify({ 
+        "cardStatusList": packState,
+        "userId": userId,
+        "packId": packId,
+       }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then(async res => {
+      const data = await res.json();
+      console.log("Loader data received:", data);
+      return data;
+    });
 }
 
 function CardGrid() {
     const dispatch = useFIORIDispatch();
     const state = useFIORI();
-
-    const cards = useLoaderData<typeof loader>()["body"]["cards"];
+    const loaderData = useLoaderData<typeof loader>()["body"];
+    const cards = loaderData["cards"];
+    const packId = loaderData["packId"];
     const [packState, setPackState] = useState<any>(initializeCardStateArray(cards.length));
 
     const handleCardClick = (id: number, action: string) => {
@@ -39,15 +55,16 @@ function CardGrid() {
     };
 
     return (
-        <div key={cards} className="flex flex-wrap justify-center sm:px-4 lg:px-16 py-4">
+        <div className="flex flex-wrap justify-center sm:px-4 lg:px-16 py-4">
             {
                 cards.map((card: any, index: number) => {
-                    return <div className="grow-0 shrink basis-60 p-2" >
+                    return <div className="grow-0 shrink sm:basis-[24vw] lg:basis-[12vw] p-2" >
                         <CardContainer
-                            key={card}
+                            key={packState[index].scryfallId}
                             index={index}
                             {...card}
                             status={packState[index].status}
+                            foil={packState[index].foil}
                             rotation={packState[index].rotation}
                             maskImage={packState[index].maskImage}
                             handleCardClick={() => handleCardClick(index, state!.action)}
@@ -82,11 +99,13 @@ function CardGrid() {
 
     function ripCard(id: number) {
         const amount = cards[id]["cents"];
+        const rotation = packState[id]["rotation"];
+        const maskImage = packState[id]["maskImage"];
 
         // sets local state for each Card 
         setPackState(
             packState.map((card: Card) => {
-                return card.id === id ? { id: id, status: 'RIPPED', rotation: 0, maskImage: -1 } : card;
+                return card.id === id ? { id: id, status: 'RIPPED', rotation, maskImage } : card;
             })
         )
         
@@ -107,9 +126,7 @@ function CardGrid() {
             console.log("All cards have been flipped or ripped");
             handleNewPack();
             handlePackCompletion();
-            //setCardState(initializeCardStateArray(cards.length));
-            // sendPostRequest();
-            //cardState
+            sendStatsData(packState, getUserId(), packId);
         }
     }
 

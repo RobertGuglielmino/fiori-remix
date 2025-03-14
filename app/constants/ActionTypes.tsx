@@ -9,4 +9,5 @@ export const enum ReducerActions {
     UPDATE_PACK_STATE,
     PACK_COMPLETED,
     PACK_STARTED,
+    SET_HARD_MODE,
   }

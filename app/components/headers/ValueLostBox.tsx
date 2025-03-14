@@ -49,11 +49,11 @@ function ValueLostBox() {
   let flipOpacity = (state!.action === "RIP") || (state!.action === undefined);
 
   return (
-    <div className='flex-basis-1'>
-      <div className={`opacity-${flipOpacity ? "25" : "100"} flex flex-col items-center justify-center rounded-lg p-4 transition duration-150`}>
+    <div className='w-24 grow-0 flex-basis-2'>
+      <div className={`opacity-${flipOpacity ? "25" : "100"} flex flex-col items-center justify-center rounded-lg transition duration-150`}>
         {/* <span ref={ref} className="value-lost-box">${previousValueRef.current.toFixed(2)}</span> */}
         <span className="font-kanit text-2xl value-lost-box">{centsToDollars(state!.amountLost)}</span>
-        <span className="font-kanit text-2xl label">Lost</span>
+        <span className="font-kanit text-4xl label">Lost</span>
       </div>
     </div>
   );
