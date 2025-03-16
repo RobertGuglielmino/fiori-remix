@@ -1,8 +1,6 @@
 import { ActionFunctionArgs,  json, LoaderFunctionArgs, redirect } from "@remix-run/node";
 import { isRouteErrorResponse, useLoaderData, useRouteError, useNavigate } from "@remix-run/react";
 import CardGrid from "../components/cards/CardGrid";
-import { ReducerActions } from "../constants/ActionTypes";
-import { useFIORI, useFIORIDispatch } from "../FIORIContext";
 
 export async function loader({
   request,
@@ -92,14 +90,6 @@ export async function action({ request }: ActionFunctionArgs) {
 }
 
 export default function Open() {
-  // const navigation = useNavigation();
-  const navigate = useNavigate();
-  const dispatch = useFIORIDispatch();
-  const state = useFIORI();
-
-  const cards = useLoaderData<typeof loader>();
-
-  console.log(cards);
 
   return (
     <div className='' id="index-page">

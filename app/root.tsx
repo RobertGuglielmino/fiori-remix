@@ -37,7 +37,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="w-full">
+      <body className="w-full bg-stone-200">
         <FIORIProvider>
           <HeaderContainer
             changeValue={changeValue}

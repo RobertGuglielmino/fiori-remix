@@ -108,6 +108,7 @@ function packStarted(state: State): State {
         packCompleted: false
     }
 }
+
 function setHardMode(state: State, action: any): State {
     return {
         ...state,
@@ -118,7 +119,7 @@ function setHardMode(state: State, action: any): State {
 
 export function FIORIProvider({ children }: any) {
     const initialState = {
-        action: "FLIP",
+        action: "NONE",
         amountLost: 0,
         amountSaved: 0,
         packCompleted: false,
@@ -142,7 +143,7 @@ export function FIORIProvider({ children }: any) {
         [ReducerActions.RESET_PACK_STATE, (state, action) => resetPackState(state, action)],
         [ReducerActions.PACK_COMPLETED, (state, _) => packCompleted(state)],
         [ReducerActions.PACK_STARTED, (state, _) => packStarted(state)],
-        [ReducerActions.SET_HARD_MODE, (state, _) => packStarted(state)],
+        [ReducerActions.SET_HARD_MODE, (state, action) => setHardMode(state, action)],
 
     ]);
 

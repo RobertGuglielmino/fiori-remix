@@ -60,11 +60,11 @@ function CardGrid() {
                 cards.map((card: any, index: number) => {
                     return <div className="grow-0 shrink sm:basis-[24vw] lg:basis-[12vw] p-2" >
                         <CardContainer
-                            key={packState[index].scryfallId}
+                            key={cards[index].scryfallId}
                             index={index}
                             {...card}
                             status={packState[index].status}
-                            foil={packState[index].foil}
+                            foil={cards[index].foil}
                             rotation={packState[index].rotation}
                             maskImage={packState[index].maskImage}
                             handleCardClick={() => handleCardClick(index, state!.action)}

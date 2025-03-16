@@ -8,6 +8,7 @@ import HomeButton from '../buttons/HomeButton';
 import Hidden from '../cardEffects/Hidden';
 import { useFIORI } from '../../FIORIContext';
 import { useLocation, useResolvedPath } from '@remix-run/react';
+import HardModeButton from '../buttons/HardModeButton';
 
 interface HeaderContainerProps {
     changeValue: number;
@@ -38,8 +39,9 @@ function HeaderContainer({ changeValue }: HeaderContainerProps) {
             </Hidden>
 
             <Hidden unless={packFullyOpened}>
-                <PlayAgainButton />
+                { state!.hardMode ? <HardModeButton /> : <PlayAgainButton />}
             </Hidden>
+            
         </div>
     );
 };
