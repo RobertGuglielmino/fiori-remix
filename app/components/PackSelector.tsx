@@ -32,19 +32,19 @@ export default function PackSelector() {
   }
 
   function handleButtonPress() {
-    // dispatch!({
-    //   type: ReducerActions.PACK_STATE,
-    //   payload: {
-    //     action: "FLIP"
-    //   }
-    // });
+    dispatch!({
+      type: ReducerActions.PACK_STATE,
+      payload: {
+        action: "FLIP"
+      }
+    });
   }
 
   return (
     <Form action="/open" method="get" className=''>
       <div className="grid grid-cols-3 h-24 w-72">
         <div className='col-span-2 flex flex-col flex-shrink-1'>
-          <select className='m-1 grow bg-slate-200 rounded'
+          <select className='m-1 grow rounded'
             id="set"
             name="set"
             defaultValue='-'
@@ -55,7 +55,7 @@ export default function PackSelector() {
             <option key="-" disabled value="-">Pick a Magic Set!</option>
             { setKeys.map((set: any) => (<option key={set} value={set}>{set}</option>)) }
           </select>
-          <select className='m-1 grow bg-slate-200 rounded'
+          <select className='m-1 grow rounded'
             id="pack-type"
             name="pack-type"
             disabled={selectedSet === ""}>
@@ -64,7 +64,7 @@ export default function PackSelector() {
 
           </select>
         </div>
-        <button className='m-1 bg-green-500 hover:bg-green-400 active:bg-green-600 rounded' type="submit">
+        <button onClick={() => handleButtonPress()} className='m-1 bg-green-500 hover:bg-green-400 active:bg-green-600 rounded' type="submit">
           <div className='object-center flex items-center justify-center'>
             <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#000000"><path d="M80-240v-480h66.67v480H80Zm559.33.67L591.67-286l160.66-160.67h-513v-66.66h513L592.67-674l46.66-46.67L880-480 639.33-239.33Z" /></svg>
           </div>
