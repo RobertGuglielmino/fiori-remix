@@ -11,13 +11,18 @@ import { useState } from "react";
 import HeaderContainer from "./components/headers/HeaderContainer";
 import { FIORIProvider } from "./FIORIContext";
 import LoadingBox from "./components/LoadingBox";
+import { Analytics } from '@vercel/analytics/react';
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
   {
     rel: "icon",
-    href: "../public/fiori favicon 64.png",
+    href: "/fiori_favicon_64.png",
     type: "image/png",
+  },
+  {
+    rel: "canonical",
+    href: "https://flipitorripit.com",
   },
   
 ];
@@ -25,7 +30,16 @@ export const links: LinksFunction = () => [
 export const meta = () => {
   return [
     { title: "Flip It or Rip It" },
-    { name: "description", content: "Magic: The Gathering cards used to simulate Flip It or Rip It - without any of the risk. Now updated for Aetherdrift!" }
+    { name: "description", content: "Magic: The Gathering cards used to simulate Flip It or Rip It - without any of the risk. Now updated for Aetherdrift!" },
+    { property: "og:title", content: "Flip It or Rip It" },
+    { property: "og:image", content: "/fiori_favicon_64.png" },
+    { property: "og:description", content: "Magic: The Gathering cards used to simulate Flip It or Rip It - without any of the risk. Now updated for Aetherdrift!" },
+    { property: "og:url", content: "https://flipitorripit.com" },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "/fiori_favicon_64.png" },
+    { name: "twitter:title", content: "Flip It or Rip It" },
+    { name: "twitter:description", content: "Magic: The Gathering cards used to simulate Flip It or Rip It - without any of the risk. Now updated for Aetherdrift!" },
+    { name: "robots", content: "index, follow" }
   ];
 };
 
@@ -51,6 +65,7 @@ export default function App() {
           />
           {navigate.state === "loading" ? <LoadingBox /> : <Outlet context={{ ...outletFunctions }} />}
 
+          <Analytics />
           <Scripts />
         </FIORIProvider>
       </body>
