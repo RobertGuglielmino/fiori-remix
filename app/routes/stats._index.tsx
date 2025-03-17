@@ -10,6 +10,7 @@ export default function Stats() {
 
     return (
         <>
+        <div className="text-4xl">Congrats! you found the test page. you get a free pack opening.</div>
             <div className="flex flex-row justify-center">
                 <div className="w-2/5 ">
                     <PersonalStats />

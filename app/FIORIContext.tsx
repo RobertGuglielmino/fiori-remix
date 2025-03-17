@@ -73,7 +73,6 @@ function flipCard(state: State, action: any): State {
     }
 }
 
-
 function ripCard(state: State, action: any): State {
     return {
         ...state,
@@ -119,7 +118,7 @@ function setHardMode(state: State, action: any): State {
 
 export function FIORIProvider({ children }: any) {
     const initialState = {
-        action: "NONE",
+        action: "FLIP",
         amountLost: 0,
         amountSaved: 0,
         packCompleted: false,

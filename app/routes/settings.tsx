@@ -12,7 +12,7 @@ export default function Settings() {
     // hard mode!
 
     return (
-        <div className="text-xl text-center center m-10">
+        <div className="text-xl text-center center m-10 flex items-center flex-col">
             <h1>show saved</h1>
             <h1>reset money every time</h1>
             <h1>reset money on home page return</h1>

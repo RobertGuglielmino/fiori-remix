@@ -16,7 +16,7 @@ export default function HomeButton() {
     }
     
     function buttonClick() {
-        updatePackState("NONE");
+        updatePackState("FLIP");
         navigate("/");
     }
 

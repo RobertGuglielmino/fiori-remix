@@ -55,10 +55,10 @@ function CardGrid() {
     };
 
     return (
-        <div className="flex flex-wrap justify-center sm:px-4 lg:px-16 py-4">
+        <div className="flex flex-wrap justify-center sm:px-4 sm:px-8 lg:px-16 py-4">
             {
                 cards.map((card: any, index: number) => {
-                    return <div className="grow-0 shrink sm:basis-[24vw] lg:basis-[12vw] p-2" >
+                    return <div className="grow-0 shrink sm:basis-[24vw] md:basis-[20vw] lg:basis-[12vw] p-2" >
                         <CardContainer
                             key={cards[index].scryfallId}
                             index={index}
