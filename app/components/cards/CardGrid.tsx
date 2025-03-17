@@ -1,8 +1,7 @@
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import CardContainer from './CardContainer';
-import invariant from 'tiny-invariant';
-import { useLoaderData, useNavigation } from '@remix-run/react';
+import { useLoaderData } from '@remix-run/react';
 import { useFIORI, useFIORIDispatch } from '../../FIORIContext';
 import { ReducerActions } from '../../constants/ActionTypes';
 import { loader } from '../../routes/open';
@@ -33,7 +32,7 @@ async function sendStatsData(packState: any, userId: string, packId: string) {
     });
 }
 
-function CardGrid() {
+export default function CardGrid() {
     const dispatch = useFIORIDispatch();
     const state = useFIORI();
     const loaderData = useLoaderData<typeof loader>()["body"];
@@ -172,5 +171,3 @@ function allCardsTouched(cardState: any) {
     // this reads before the last state is set from NONE. we check for 1 bc i dont want to debug this now.
     return cardState.filter((card: any) => { return card["status"] == "NONE" }).length == 1
 }
-
-export default CardGrid;

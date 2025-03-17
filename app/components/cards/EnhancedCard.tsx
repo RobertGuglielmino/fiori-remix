@@ -11,8 +11,6 @@ export default function EnhancedCard ({ src, alt, handleCardClick }: EnhancedCar
   const cardRef = useRef<HTMLDivElement | null>(null);
   const frameRef = useRef<number | null>(null);
   const isHoveringRef = useRef(false);
-  
-  // Maximum tilt rotation in degrees
   const maxTilt = 15;
   
   // Debounced/throttled mouse move handler using requestAnimationFrame

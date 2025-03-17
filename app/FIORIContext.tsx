@@ -1,4 +1,4 @@
-import { createContext, type Dispatch, useContext, useReducer, useState } from 'react';
+import { createContext, type Dispatch, useContext, useReducer } from 'react';
 import {ReducerActions} from './constants/ActionTypes';
 
 export const FIORIContext = createContext<State | null>(null);

@@ -3,10 +3,7 @@ import { useFIORI } from '../../FIORIContext';
 
 function ValueSavedBox() {
     const state = useFIORI();
-
     let flipOpacity = (state!.action === "FLIP") || (state!.action === undefined);
-
-    //opacity-${flipOpacity ? "100" : "25"} 
 
     return (
         <div className='w-24 grow-0 flex-basis-2'>

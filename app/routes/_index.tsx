@@ -1,9 +1,6 @@
-import { json } from "@remix-run/node";
 import PackSelector from "../components/PackSelector"
 import invariant from "tiny-invariant";
-import packTypesJson from '../../public/models/packTypes.json';
-import { Link, useLocation, useNavigate, useOutletContext } from "@remix-run/react";
-import FlipRipDisplay from "../components/headers/FlipRipDisplay";
+import { useNavigate } from "@remix-run/react";
 
 export async function loader() {
   const response = await fetch('https://s8ib0k5c81.execute-api.us-east-1.amazonaws.com/prod/flip-or-rip-lambda/sets')
@@ -18,7 +15,6 @@ export async function loader() {
 
 export default function Index() {
   const navigate = useNavigate();
-  const outletContext = useOutletContext();
 
   return (<div className="bg-stone-200">
 
@@ -26,9 +22,6 @@ export default function Index() {
       <div className="text-center font-quicksand content-center">
         <div className="flex flex-row justify-center text-xl">
           <PackSelector />
-        </div>
-        <div>
-          
         </div>
         <div className="px-36 text-center">
           <span className="text-md italic">
@@ -54,7 +47,7 @@ export default function Index() {
     </div>
     <div className="flex flex-row justify-center gap-2">
       {/* <button onClick={() => navigate("/stats")} className="disabled bg-amber-500 hover:bg-amber-400 active:bg-amber-600  font-quicksand p-12 rounded mb-4"> */}
-      <button onClick={() => updateStats()} className="disabled bg-amber-500 grayscale font-quicksand p-12 pb-6 rounded mb-4">
+      <button  className="disabled bg-amber-500 grayscale font-quicksand p-12 pb-6 rounded mb-4">
         <div className='object-center flex flex-col items-center justify-center'>
           <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#000000"><path d="M146.67-186.67h178v-346.66h-178v346.66Zm244.66 0h177.34v-586.66H391.33v586.66Zm244 0h178v-266.66h-178v266.66ZM80-120v-480h244.67v-240h310.66v320H880v400H80Z" /></svg>
           <div className="text-xl">

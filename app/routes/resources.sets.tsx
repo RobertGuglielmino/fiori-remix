@@ -1,10 +1,8 @@
-import { json, LoaderFunctionArgs } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import invariant from "tiny-invariant";
 import packTypesJson from '../../public/models/packTypes.json';
 
-export async function loader({
-    params,
-}: LoaderFunctionArgs) {
+export async function loader() {
     const response = await fetch('https://api.scryfall.com/sets');
     const data = await response.json();
     invariant(data, "Missing data from scryfall");
@@ -25,9 +23,7 @@ export async function loader({
     return json(packSets);
 }
 
-export async function action({
-    params,
-}: LoaderFunctionArgs) {
+export async function action() {
     const response = await fetch('https://api.scryfall.com/sets');
     const data = await response.json();
     invariant(data, "Missing data from scryfall");

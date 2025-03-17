@@ -14,15 +14,12 @@ export default function PlayAgainButton() {
         });
     }
 
-
     function buttonClick() {
         updatePackState();
-        // call api
         navigate(`/open?${searchParams.toString()}`, {
             replace: true
         });
     }
-
 
     return (
         <button onClick={() => buttonClick()} className='flex-basis-0  bg-green-500 hover:bg-green-400 active:bg-green-600  size-24 rounded'>

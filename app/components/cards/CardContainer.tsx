@@ -18,8 +18,7 @@ interface CardContainerProps {
     handleCardClick: () => void;
 }
 
-function CardContainer({ name, cents, image, status, foil, rotation, maskImage, handleCardClick }: CardContainerProps) {
-
+export default function CardContainer({ name, cents, image, status, foil, rotation, maskImage, handleCardClick }: CardContainerProps) {
     const [maskPosition, setMaskPosition] = useState('25%_25%');
 
     let revealed = status === "FLIPPED" || status === "RIPPED";
@@ -35,5 +34,3 @@ function CardContainer({ name, cents, image, status, foil, rotation, maskImage, 
         </div>
     );
 };
-
-export default CardContainer;

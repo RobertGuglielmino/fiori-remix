@@ -6,11 +6,6 @@ export default function Settings() {
     const dispatch = useFIORIDispatch();
     const state = useFIORI();
 
-    // show saved
-    // reset money every time
-    // reset money on home page return
-    // hard mode!
-
     return (
         <div className="text-xl text-center center m-10 flex items-center flex-col">
             <h1>show saved</h1>

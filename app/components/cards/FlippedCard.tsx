@@ -1,4 +1,3 @@
-
 interface FlippedCardProps {
     src: string;
     alt: string;
@@ -6,7 +5,6 @@ interface FlippedCardProps {
 }
 
 export default function FlippedCard({ src, alt, foil }: FlippedCardProps) {
-
     return (
         <div className="relative w-full h-full relative">
             <img

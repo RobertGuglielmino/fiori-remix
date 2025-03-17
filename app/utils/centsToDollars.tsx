@@ -1,4 +1,3 @@
-
 export default function centsToDollars(amount: number) {
     let unit: number = amount;
     const cents: number = (unit % 100);

@@ -1,5 +1,5 @@
 import { ActionFunctionArgs,  json, LoaderFunctionArgs, redirect } from "@remix-run/node";
-import { isRouteErrorResponse, useLoaderData, useRouteError, useNavigate } from "@remix-run/react";
+import { isRouteErrorResponse, useRouteError } from "@remix-run/react";
 import CardGrid from "../components/cards/CardGrid";
 
 export async function loader({
@@ -90,7 +90,6 @@ export async function action({ request }: ActionFunctionArgs) {
 }
 
 export default function Open() {
-
   return (
     <div className='' id="index-page">
       <CardGrid />

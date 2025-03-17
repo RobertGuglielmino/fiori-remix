@@ -2,19 +2,18 @@
 import ValueLostBox from './ValueLostBox';
 import ValueSavedBox from './ValueSavedBox';
 import FlipRipDisplay from './FlipRipDisplay';
-import { useContext, useState } from 'react';
 import PlayAgainButton from '../buttons/PlayAgainButton';
 import HomeButton from '../buttons/HomeButton';
 import Hidden from '../cardEffects/Hidden';
 import { useFIORI } from '../../FIORIContext';
-import { useLocation, useResolvedPath } from '@remix-run/react';
+import { useLocation } from '@remix-run/react';
 import HardModeButton from '../buttons/HardModeButton';
 
 interface HeaderContainerProps {
     changeValue: number;
 }
 
-function HeaderContainer({ changeValue }: HeaderContainerProps) {
+export default function HeaderContainer({ changeValue }: HeaderContainerProps) {
     const state = useFIORI();
     const path = useLocation();
     
@@ -45,5 +44,3 @@ function HeaderContainer({ changeValue }: HeaderContainerProps) {
         </div>
     );
 };
-
-export default HeaderContainer;

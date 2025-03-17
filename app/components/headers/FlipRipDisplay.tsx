@@ -3,12 +3,13 @@ import fioriFirst from '../../../images/FlipItHeader.png';
 import fioriEnd from '../../../images/RipItHeader.png';
 import { useFIORI } from '../../FIORIContext';
 
-function FlipRipDisplay() {
+export default function FlipRipDisplay() {
     const state = useFIORI();
     const location = useLocation();
 
     let toFlip = (state!.action === "FLIP") || (state!.action === "END") || (location.pathname == "/");
     let toRip = (state!.action === "RIP") || (state!.action === "END") || (location.pathname == "/");
+
     return (
         <>
             <div className='flex flex-row h-100 overflow-hidden'>
@@ -22,5 +23,3 @@ function FlipRipDisplay() {
         </>
     );
 };
-
-export default FlipRipDisplay;

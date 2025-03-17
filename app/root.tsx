@@ -7,11 +7,10 @@ import {
   useNavigation,
 } from "@remix-run/react";
 import stylesheet from "./tailwind.css?url";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import HeaderContainer from "./components/headers/HeaderContainer";
-import { FIORIProvider, FIORIDispatchContext, useFIORIDispatch, useFIORI } from "./FIORIContext";
+import { FIORIProvider } from "./FIORIContext";
 import LoadingBox from "./components/LoadingBox";
-import getUserId  from "~/localStorage.client";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },

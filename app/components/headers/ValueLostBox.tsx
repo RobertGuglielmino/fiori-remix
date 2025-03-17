@@ -3,7 +3,7 @@ import { useFIORI } from '../../FIORIContext';
 
 const easeIn = (t: number) => t * t;
 
-function ValueLostBox() {
+export default function ValueLostBox() {
   const state = useFIORI();
 
   // const ref = useRef<HTMLSpanElement>(null);
@@ -58,5 +58,3 @@ function ValueLostBox() {
     </div>
   );
 };
-
-export default ValueLostBox;

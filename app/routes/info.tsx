@@ -24,22 +24,20 @@ export default function Info() {
                 Code available here - <a className="text-blue-500 underline" target="_blank" rel="noopener noreferrer" href="https://github.com/RobertGuglielmino/fiori-remix">GitHub Link</a><br /><br />
                 <HomeButton />
 
-      {/* Fixed Toast Notification */}
-      <div 
-        className={`
-          fixed top-4 right-4 
-          bg-green-500 text-white px-3 py-1 rounded shadow-lg
-          flex items-center space-x-1
-          transition-all duration-300 z-50
-          ${showNotification ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'}
-        `}
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-        </svg>
-        <span>Copied!</span>
-      </div>
-
+                <div
+                    className={`
+                    fixed top-4 right-4 
+                    bg-green-500 text-white px-3 py-1 rounded shadow-lg
+                    flex items-center space-x-1
+                    transition-all duration-300 z-50
+                    ${showNotification ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'}
+                    `}
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>Copied!</span>
+                </div>
             </div>
         </div>
     )
