@@ -11,6 +11,7 @@ interface CardContainerProps {
     name: string;
     cents: number;
     image: string;
+    cf_image: string;
     status: string;
     foil: boolean;
     rotation: number;
@@ -18,7 +19,7 @@ interface CardContainerProps {
     handleCardClick: () => void;
 }
 
-export default function CardContainer({ name, cents, image, status, foil, rotation, maskImage, handleCardClick }: CardContainerProps) {
+export default function CardContainer({ name, cents, image, cf_image, status, foil, rotation, maskImage, handleCardClick }: CardContainerProps) {
     const [maskPosition, setMaskPosition] = useState('25%_25%');
 
     let revealed = status === "FLIPPED" || status === "RIPPED";
@@ -27,8 +28,8 @@ export default function CardContainer({ name, cents, image, status, foil, rotati
     return (
         <div className="flex flex-col items-center rounded-lg">
             {status === "NONE" && <EnhancedCard src={cardBack} alt="test" handleCardClick={() => handleCardClick()} />}
-            {status === "FLIPPED" && <FlippedCard src={image} alt="test" foil={foil} />}
-            {status === "RIPPED" && <RippedCard src={image} maskImage={maskImage} maskPosition={maskPosition} />}
+            {status === "FLIPPED" && <FlippedCard src={cf_image} alt="test" foil={foil} />}
+            {status === "RIPPED" && <RippedCard src={cf_image} maskImage={maskImage} maskPosition={maskPosition} />}
             <div className="font-kanit text-center text-sm">{revealed ? name : nonBreakingSpace}</div>
             <div className="font-kanit text-center text-sm">{revealed ? centsToDollars(cents) : nonBreakingSpace}</div>
         </div>

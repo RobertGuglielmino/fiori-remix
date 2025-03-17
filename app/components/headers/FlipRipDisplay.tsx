@@ -7,8 +7,10 @@ export default function FlipRipDisplay() {
     const state = useFIORI();
     const location = useLocation();
 
-    let toFlip = (state!.action === "FLIP") || (state!.action === "END") || (location.pathname == "/");
-    let toRip = (state!.action === "RIP") || (state!.action === "END") || (location.pathname == "/");
+    //FIORI header full opacity only if we're opening a pack, and if the action is appropriate
+    //yes this is ugly no i'm not fixing it right now
+    let toFlip = (state!.action === "FLIP") || (state!.action === "END") || (location.pathname == "/") || (location.pathname == "/stats") || (location.pathname == "/info") || (location.pathname == "/settings");
+    let toRip = (state!.action === "RIP") || (state!.action === "END") || (location.pathname == "/") || (location.pathname == "/stats") || (location.pathname == "/info") || (location.pathname == "/settings");
 
     return (
         <>
