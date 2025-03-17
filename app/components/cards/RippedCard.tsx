@@ -10,11 +10,11 @@ export default function RippedCard({
     src,
 }: RippedCardProps) {
     const MASK_IMAGES = [
-        `mask-image-[url(../../../images/masks/mask1.png)]`,
-        `mask-image-[url(../../../images/masks/mask2.png)]`,
-        `mask-image-[url(../../../images/masks/mask3.png)]`,
-        `mask-image-[url(../../../images/masks/mask4.png)]`,
-        `mask-image-[url(../../../images/masks/mask5.png)]`,
+        `mask-image-[url(/images/masks/mask1.png)]`,
+        `mask-image-[url(/images/masks/mask2.png)]`,
+        `mask-image-[url(/images/masks/mask3.png)]`,
+        `mask-image-[url(/images/masks/mask4.png)]`,
+        `mask-image-[url(/images/masks/mask5.png)]`,
     ];
 
     return (
