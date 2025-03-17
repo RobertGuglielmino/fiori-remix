@@ -19,7 +19,15 @@ export const links: LinksFunction = () => [
     href: "../public/fiori favicon 64.png",
     type: "image/png",
   },
+  
 ];
+
+export const meta = () => {
+  return [
+    { title: "Flip It or Rip It" },
+    { name: "description", content: "Magic: The Gathering cards used to simulate Flip It or Rip It - without any of the risk. Now updated for Aetherdrift!" }
+  ];
+};
 
 
 export default function App() {
