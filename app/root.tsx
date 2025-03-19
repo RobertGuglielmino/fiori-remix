@@ -12,6 +12,7 @@ import HeaderContainer from "./components/headers/HeaderContainer";
 import { FIORIProvider } from "./FIORIContext";
 import LoadingBox from "./components/LoadingBox";
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from "@vercel/speed-insights/remix"
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -24,12 +25,23 @@ export const links: LinksFunction = () => [
     rel: "canonical",
     href: "https://flipitorripit.com",
   },
+  {
+    rel: "preload",
+    href: "~/images/FlipItHeader.png", 
+    as: "image",
+  },
+  {
+    rel: "preload",
+    href: "~/images/RipItHeader.png",
+    as: "image",
+  },
   
 ];
 
 export const meta = () => {
   return [
     { title: "Flip It or Rip It" },
+    { name: "viewport", content: "width=device-width, initial-scale=1.0" },
     { name: "description", content: "Magic: The Gathering cards used to simulate Flip It or Rip It - without any of the risk. Now updated for Aetherdrift!" },
     { property: "og:title", content: "Flip It or Rip It" },
     { property: "og:image", content: "/fiori_favicon_64.png" },
@@ -66,6 +78,7 @@ export default function App() {
           {navigate.state === "loading" ? <LoadingBox /> : <Outlet context={{ ...outletFunctions }} />}
 
           <Analytics />
+          <SpeedInsights />
           <Scripts />
         </FIORIProvider>
       </body>

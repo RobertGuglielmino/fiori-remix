@@ -8,11 +8,11 @@ export default function Settings() {
 
     return (
         <div className="text-xl text-center center m-10 flex items-center flex-col">
-            <h1>show saved</h1>
+            {/* <h1>show saved</h1>
             <h1>reset money every time</h1>
             <h1>reset money on home page return</h1>
-            <h1>hard mode!</h1>
-            <button key="hard" onClick={() => setHardMode()} disabled={state!.hardMode} className="bg-red-700 hover:not-disabled:bg-red-600 active:not-disabled:bg-red-800 disabled:bg-gray-500 rounded p-4 strong">Hard Mode</button>
+            <h1>hard mode!</h1> */}
+            <button key="hard" onClick={() => setHardMode()} disabled={state!.hardMode} className="m-4 bg-red-700 hover:not-disabled:bg-red-600 active:not-disabled:bg-red-800 disabled:bg-gray-500 rounded p-4 strong">Hard Mode</button>
             <HomeButton />
         </div>
     )
