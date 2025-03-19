@@ -280,16 +280,16 @@ function ValueSavedBox() {
     /* @__PURE__ */ jsx("span", { className: `font-kanit text-4xl label transition duration-150`, children: "Saved" })
   ] }) });
 }
-const fioriFirst = "/assets/FlipItHeader-_cBlW26e.png";
-const fioriEnd = "/assets/RipItHeader-CiMiiB90.png";
+const fioriFirst = "/assets/FlipItHeader-xTgI1e2n.webp";
+const fioriEnd = "/assets/RipItHeader-DynYGx9s.webp";
 function FlipRipDisplay() {
   const state = useFIORI();
   const location = useLocation();
   let toFlip = state.action === "FLIP" || state.action === "END" || location.pathname == "/" || location.pathname == "/stats" || location.pathname == "/info" || location.pathname == "/settings";
   let toRip = state.action === "RIP" || state.action === "END" || location.pathname == "/" || location.pathname == "/stats" || location.pathname == "/info" || location.pathname == "/settings";
   return /* @__PURE__ */ jsx(Fragment, { children: /* @__PURE__ */ jsxs("div", { className: "flex flex-row h-100 overflow-hidden", children: [
-    /* @__PURE__ */ jsx("div", { className: "h-25 transition delay-150 ease-in-out duration-500", children: /* @__PURE__ */ jsx("img", { className: `${toFlip ? "opacity-100" : "opacity-25"} object-scale-down transition duration-150`, src: fioriFirst, alt: "" }) }),
-    /* @__PURE__ */ jsx("div", { className: "x-50 h-25", children: /* @__PURE__ */ jsx("img", { className: `${toRip ? "opacity-100" : "opacity-25"}  object-scale-down transition duration-150`, src: fioriEnd, alt: "" }) })
+    /* @__PURE__ */ jsx("div", { className: "h-25 transition delay-150 ease-in-out duration-500", children: /* @__PURE__ */ jsx("img", { fetchPriority: "high", className: `${toFlip ? "opacity-100" : "opacity-25"} object-scale-down transition duration-150`, src: fioriFirst, alt: "" }) }),
+    /* @__PURE__ */ jsx("div", { className: "x-50 h-25", children: /* @__PURE__ */ jsx("img", { fetchPriority: "high", className: `${toRip ? "opacity-100" : "opacity-25"}  object-scale-down transition duration-150`, src: fioriEnd, alt: "" }) })
   ] }) });
 }
 function PlayAgainButton() {
@@ -455,7 +455,7 @@ const route0 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProper
   links,
   meta
 }, Symbol.toStringTag, { value: "Module" }));
-async function loader$4({ request }) {
+async function loader$5({ request }) {
   const url = new URL(request.url);
   const set = url.searchParams.get("set");
   const pack_type = url.searchParams.get("pack-type");
@@ -481,7 +481,7 @@ async function loader$4({ request }) {
 }
 const route1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  loader: loader$4
+  loader: loader$5
 }, Symbol.toStringTag, { value: "Module" }));
 const A25 = [
   "draft"
@@ -1338,7 +1338,7 @@ const packTypesJson = {
   ZEN,
   ZNR
 };
-async function loader$3() {
+async function loader$4() {
   const response = await fetch("https://api.scryfall.com/sets");
   const data = await response.json();
   invariant(data, "Missing data from scryfall");
@@ -1367,6 +1367,39 @@ async function action$1() {
 const route2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   action: action$1,
+  loader: loader$4
+}, Symbol.toStringTag, { value: "Module" }));
+const loader$3 = async () => {
+  const baseUrl = "https://www.flipitorripit.com";
+  const today = (/* @__PURE__ */ new Date()).toISOString();
+  const pages = [
+    { path: "", lastmod: today, priority: "1.0", changefreq: "weekly" },
+    { path: "open", lastmod: today, priority: "0.9", changefreq: "monthly" },
+    { path: "stats", lastmod: today, priority: "0.8", changefreq: "monthly" },
+    { path: "settings", lastmod: today, priority: "0.8", changefreq: "monthly" },
+    { path: "info", lastmod: today, priority: "0.7", changefreq: "monthly" }
+  ];
+  const urlEntries = pages.map((page) => `
+  <url>
+    <loc>${baseUrl}/${page.path}</loc>
+    <lastmod>${page.lastmod}</lastmod>
+    <changefreq>${page.changefreq}</changefreq>
+    <priority>${page.priority}</priority>
+  </url>`).join("");
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urlEntries}
+</urlset>`;
+  return new Response(sitemap, {
+    status: 200,
+    headers: {
+      "Content-Type": "application/xml",
+      "Cache-Control": "public, max-age=86400"
+    }
+  });
+};
+const route3 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
   loader: loader$3
 }, Symbol.toStringTag, { value: "Module" }));
 const loader$2 = async () => {
@@ -1380,11 +1413,11 @@ Sitemap: https://flipitorripit.com/sitemap.xml`;
     }
   });
 };
-const route3 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const route4 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   loader: loader$2
 }, Symbol.toStringTag, { value: "Module" }));
-const route4 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const route5 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null
 }, Symbol.toStringTag, { value: "Module" }));
 function StatsTableBase({ title, data }) {
@@ -1426,11 +1459,11 @@ function Stats() {
     /* @__PURE__ */ jsx("div", { className: "object-center", children: /* @__PURE__ */ jsx(HomeButton, {}) })
   ] });
 }
-const route5 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const route6 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Stats
 }, Symbol.toStringTag, { value: "Module" }));
-const route6 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const route7 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null
 }, Symbol.toStringTag, { value: "Module" }));
 function Settings() {
@@ -1449,7 +1482,7 @@ function Settings() {
     });
   }
 }
-const route7 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const route8 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Settings
 }, Symbol.toStringTag, { value: "Module" }));
@@ -1605,7 +1638,7 @@ function Index() {
     ] })
   ] });
 }
-const route8 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const route9 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Index,
   loader: loader$1
@@ -1659,7 +1692,7 @@ function Info() {
     )
   ] }) });
 }
-const route9 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const route10 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Info
 }, Symbol.toStringTag, { value: "Module" }));
@@ -1984,14 +2017,14 @@ async function action({ request }) {
 function Open() {
   return /* @__PURE__ */ jsx("div", { className: "", id: "index-page", children: /* @__PURE__ */ jsx(CardGrid, {}) });
 }
-const route10 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const route11 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   ErrorBoundary,
   action,
   default: Open,
   loader
 }, Symbol.toStringTag, { value: "Module" }));
-const serverManifest = { "entry": { "module": "/assets/entry.client-BYIQakb8.js", "imports": ["/assets/index-tYKNpfdO.js", "/assets/components-Dvgg3KYd.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/root-nik30xdF.js", "imports": ["/assets/index-tYKNpfdO.js", "/assets/components-Dvgg3KYd.js", "/assets/centsToDollars-BemH1-NO.js", "/assets/FIORIContext-0Ler7iJV.js", "/assets/HomeButton-B6B6Hyis.js"], "css": [] }, "routes/resources.packs": { "id": "routes/resources.packs", "parentId": "root", "path": "resources/packs", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/resources.packs-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/resources.sets": { "id": "routes/resources.sets", "parentId": "root", "path": "resources/sets", "index": void 0, "caseSensitive": void 0, "hasAction": true, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/resources.sets-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/robots[.]txt": { "id": "routes/robots[.]txt", "parentId": "root", "path": "robots.txt", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/robots_._txt-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/stats.global": { "id": "routes/stats.global", "parentId": "root", "path": "stats/global", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/stats.global-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/stats._index": { "id": "routes/stats._index", "parentId": "root", "path": "stats", "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/stats._index-C12U1OIf.js", "imports": ["/assets/index-tYKNpfdO.js", "/assets/centsToDollars-BemH1-NO.js", "/assets/HomeButton-B6B6Hyis.js", "/assets/FIORIContext-0Ler7iJV.js"], "css": [] }, "routes/stats.user": { "id": "routes/stats.user", "parentId": "root", "path": "stats/user", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/stats.user-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/settings": { "id": "routes/settings", "parentId": "root", "path": "settings", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/settings-BEKRxwT_.js", "imports": ["/assets/index-tYKNpfdO.js", "/assets/HomeButton-B6B6Hyis.js", "/assets/FIORIContext-0Ler7iJV.js"], "css": [] }, "routes/_index": { "id": "routes/_index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/_index-CPK_rXm8.js", "imports": ["/assets/index-tYKNpfdO.js", "/assets/components-Dvgg3KYd.js"], "css": [] }, "routes/info": { "id": "routes/info", "parentId": "root", "path": "info", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/info-D8BmfPAF.js", "imports": ["/assets/index-tYKNpfdO.js", "/assets/HomeButton-B6B6Hyis.js", "/assets/FIORIContext-0Ler7iJV.js"], "css": [] }, "routes/open": { "id": "routes/open", "parentId": "root", "path": "open", "index": void 0, "caseSensitive": void 0, "hasAction": true, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": true, "module": "/assets/open-D-jfm4TK.js", "imports": ["/assets/index-tYKNpfdO.js", "/assets/centsToDollars-BemH1-NO.js", "/assets/FIORIContext-0Ler7iJV.js", "/assets/components-Dvgg3KYd.js"], "css": [] } }, "url": "/assets/manifest-be2a83d3.js", "version": "be2a83d3" };
+const serverManifest = { "entry": { "module": "/assets/entry.client-BYIQakb8.js", "imports": ["/assets/index-tYKNpfdO.js", "/assets/components-Dvgg3KYd.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/root-DR96OKdh.js", "imports": ["/assets/index-tYKNpfdO.js", "/assets/components-Dvgg3KYd.js", "/assets/centsToDollars-BemH1-NO.js", "/assets/FIORIContext-0Ler7iJV.js", "/assets/HomeButton-B6B6Hyis.js"], "css": [] }, "routes/resources.packs": { "id": "routes/resources.packs", "parentId": "root", "path": "resources/packs", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/resources.packs-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/resources.sets": { "id": "routes/resources.sets", "parentId": "root", "path": "resources/sets", "index": void 0, "caseSensitive": void 0, "hasAction": true, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/resources.sets-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/sitemap[.]xml": { "id": "routes/sitemap[.]xml", "parentId": "root", "path": "sitemap.xml", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/sitemap_._xml-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/robots[.]txt": { "id": "routes/robots[.]txt", "parentId": "root", "path": "robots.txt", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/robots_._txt-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/stats.global": { "id": "routes/stats.global", "parentId": "root", "path": "stats/global", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/stats.global-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/stats._index": { "id": "routes/stats._index", "parentId": "root", "path": "stats", "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/stats._index-C12U1OIf.js", "imports": ["/assets/index-tYKNpfdO.js", "/assets/centsToDollars-BemH1-NO.js", "/assets/HomeButton-B6B6Hyis.js", "/assets/FIORIContext-0Ler7iJV.js"], "css": [] }, "routes/stats.user": { "id": "routes/stats.user", "parentId": "root", "path": "stats/user", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/stats.user-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/settings": { "id": "routes/settings", "parentId": "root", "path": "settings", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/settings-BEKRxwT_.js", "imports": ["/assets/index-tYKNpfdO.js", "/assets/HomeButton-B6B6Hyis.js", "/assets/FIORIContext-0Ler7iJV.js"], "css": [] }, "routes/_index": { "id": "routes/_index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/_index-CPK_rXm8.js", "imports": ["/assets/index-tYKNpfdO.js", "/assets/components-Dvgg3KYd.js"], "css": [] }, "routes/info": { "id": "routes/info", "parentId": "root", "path": "info", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/info-D8BmfPAF.js", "imports": ["/assets/index-tYKNpfdO.js", "/assets/HomeButton-B6B6Hyis.js", "/assets/FIORIContext-0Ler7iJV.js"], "css": [] }, "routes/open": { "id": "routes/open", "parentId": "root", "path": "open", "index": void 0, "caseSensitive": void 0, "hasAction": true, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": true, "module": "/assets/open-D-jfm4TK.js", "imports": ["/assets/index-tYKNpfdO.js", "/assets/centsToDollars-BemH1-NO.js", "/assets/FIORIContext-0Ler7iJV.js", "/assets/components-Dvgg3KYd.js"], "css": [] } }, "url": "/assets/manifest-5fbca531.js", "version": "5fbca531" };
 const mode = "production";
 const assetsBuildDirectory = "build\\client";
 const basename = "/";
@@ -2024,13 +2057,21 @@ const routes = {
     caseSensitive: void 0,
     module: route2
   },
+  "routes/sitemap[.]xml": {
+    id: "routes/sitemap[.]xml",
+    parentId: "root",
+    path: "sitemap.xml",
+    index: void 0,
+    caseSensitive: void 0,
+    module: route3
+  },
   "routes/robots[.]txt": {
     id: "routes/robots[.]txt",
     parentId: "root",
     path: "robots.txt",
     index: void 0,
     caseSensitive: void 0,
-    module: route3
+    module: route4
   },
   "routes/stats.global": {
     id: "routes/stats.global",
@@ -2038,7 +2079,7 @@ const routes = {
     path: "stats/global",
     index: void 0,
     caseSensitive: void 0,
-    module: route4
+    module: route5
   },
   "routes/stats._index": {
     id: "routes/stats._index",
@@ -2046,7 +2087,7 @@ const routes = {
     path: "stats",
     index: true,
     caseSensitive: void 0,
-    module: route5
+    module: route6
   },
   "routes/stats.user": {
     id: "routes/stats.user",
@@ -2054,7 +2095,7 @@ const routes = {
     path: "stats/user",
     index: void 0,
     caseSensitive: void 0,
-    module: route6
+    module: route7
   },
   "routes/settings": {
     id: "routes/settings",
@@ -2062,7 +2103,7 @@ const routes = {
     path: "settings",
     index: void 0,
     caseSensitive: void 0,
-    module: route7
+    module: route8
   },
   "routes/_index": {
     id: "routes/_index",
@@ -2070,7 +2111,7 @@ const routes = {
     path: void 0,
     index: true,
     caseSensitive: void 0,
-    module: route8
+    module: route9
   },
   "routes/info": {
     id: "routes/info",
@@ -2078,7 +2119,7 @@ const routes = {
     path: "info",
     index: void 0,
     caseSensitive: void 0,
-    module: route9
+    module: route10
   },
   "routes/open": {
     id: "routes/open",
@@ -2086,7 +2127,7 @@ const routes = {
     path: "open",
     index: void 0,
     caseSensitive: void 0,
-    module: route10
+    module: route11
   }
 };
 export {
