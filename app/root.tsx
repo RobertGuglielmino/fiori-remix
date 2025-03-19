@@ -27,13 +27,33 @@ export const links: LinksFunction = () => [
   },
   {
     rel: "preload",
-    href: "~/images/FlipItHeader.png", 
+    href: "/images/FlipItHeader.webp",  
     as: "image",
+    type: "image/webp",
+    imagesrcset: "/images/FlipItHeader.webp",
+    fetchpriority: "high"  
   },
   {
     rel: "preload",
-    href: "~/images/RipItHeader.png",
+    href: "/images/RipItHeader.webp",
     as: "image",
+    type: "image/webp",
+    imagesrcset: "/images/FlipItHeader.webp",
+    fetchpriority: "high"  
+  },
+  {
+    rel: "preload",
+    href: "/fonts/Kanit/Kanit-Regular.ttf",
+    as: "font",
+    type: "font/ttf",
+    crossOrigin: "anonymous"
+  },
+  {
+    rel: "preload",
+    href: "/fonts/Quicksand/Quicksand-VariableFont_wght.ttf",
+    as: "font",
+    type: "font/ttf",
+    crossOrigin: "anonymous"
   },
   
 ];

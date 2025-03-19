@@ -1,6 +1,6 @@
 import { useLocation } from '@remix-run/react';
-import fioriFirst from '../../../images/FlipItHeader.webp';
-import fioriEnd from '../../../images/RipItHeader.webp';
+import fioriFirst from '../../../public/images/FlipItHeader.webp';
+import fioriEnd from '../../../public/images/RipItHeader.webp';
 import { useFIORI } from '~/FIORIContext';
 
 export default function FlipRipDisplay() {
