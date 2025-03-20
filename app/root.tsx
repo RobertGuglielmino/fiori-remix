@@ -55,6 +55,15 @@ export const links: LinksFunction = () => [
     type: "font/ttf",
     crossOrigin: "anonymous"
   },
+  {
+    rel: "preconnect",
+    href: "https://s8ib0k5c81.execute-api.us-east-1.amazonaws.com",
+  },
+  {
+    rel: "preconnect",
+    href: "https://s8ib0k5c81.execute-api.us-east-1.amazonaws.com", // Change to your image host
+    crossOrigin: "anonymous"
+  }
   
 ];
 

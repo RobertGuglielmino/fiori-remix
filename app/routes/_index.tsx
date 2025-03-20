@@ -3,9 +3,11 @@ import invariant from "tiny-invariant";
 import { useNavigate } from "@remix-run/react";
 
 export async function loader() {
+  console.log("data");
   const response = await fetch('https://s8ib0k5c81.execute-api.us-east-1.amazonaws.com/prod/flip-or-rip-lambda/sets')
     .then(async res => {
       const data = await res.json();
+      console.log(data);
       return data.body;
     });
   invariant(response, "Missing data from scryfall");
