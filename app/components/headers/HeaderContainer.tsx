@@ -16,31 +16,39 @@ interface HeaderContainerProps {
 export default function HeaderContainer({ changeValue }: HeaderContainerProps) {
     const state = useFIORI();
     const path = useLocation();
-    
+
 
     let packGenerated = path.pathname === "/open";
     let packFullyOpened = state!.action === "END";
 
     return (
-        <div className="place-content-evenly flex items-center flex-row gap-6 m-4">
-            <Hidden unless={packFullyOpened}>
-                <HomeButton />
-            </Hidden>
+        <div className="place-content-evenly flex items-center flex-row gap-2 sm:gap-6 m-4">
+            <div className="hidden sm:block">
+                <Hidden unless={packFullyOpened}>
+                    <HomeButton />
+                </Hidden>
+            </div>
 
-            <Hidden unless={packGenerated}>
-                <ValueSavedBox  />
-            </Hidden>
+            <div className="mx-6 sm:mx-0">
+                <Hidden unless={packGenerated}>
+                    <ValueSavedBox />
+                </Hidden>
+            </div>
 
             <FlipRipDisplay />
 
-            <Hidden unless={packGenerated}>
-                <ValueLostBox  />
-            </Hidden>
+            <div className="mx-6 sm:mx-0">
+                <Hidden unless={packGenerated}>
+                    <ValueLostBox />
+                </Hidden>
+            </div>
 
-            <Hidden unless={packFullyOpened}>
-                { state!.hardMode ? <HardModeButton /> : <PlayAgainButton />}
-            </Hidden>
-            
+            <div className="hidden sm:block">
+                <Hidden unless={packFullyOpened}>
+                    {state!.hardMode ? <HardModeButton /> : <PlayAgainButton />}
+                </Hidden>
+            </div>
+
         </div>
     );
 };

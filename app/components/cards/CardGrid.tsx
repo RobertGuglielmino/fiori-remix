@@ -54,10 +54,10 @@ export default function CardGrid() {
     };
 
     return (
-        <div className="flex flex-wrap justify-center sm:px-4 sm:px-8 lg:px-16 py-4">
+        <div className="flex flex-wrap justify-center sm:px-4 sm:px-8 lg:px-4 2xl:px-0 py-4">
             {
                 cards.map((card: any, index: number) => {
-                    return <div className="grow-0 shrink basis-[30-vw] sm:basis-[24vw] md:basis-[20vw] lg:basis-[12vw] p-2" >
+                    return <div className="grow-0 shrink basis-[30vw] sm:basis-[20vw]  lg:basis-[14vw] xl:basis-[12vw] p-2" >
                         <CardContainer
                             key={cards[index].scryfallId}
                             index={index}

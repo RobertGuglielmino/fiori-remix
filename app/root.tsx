@@ -43,14 +43,14 @@ export const links: LinksFunction = () => [
   },
   {
     rel: "preload",
-    href: "/fonts/Kanit/Kanit-Regular.ttf",
+    href: "/fonts/Quicksand/static/Quicksand-Bold.ttf",
     as: "font",
     type: "font/ttf",
     crossOrigin: "anonymous"
   },
   {
     rel: "preload",
-    href: "/fonts/Quicksand/Quicksand-VariableFont_wght.ttf",
+    href: "/fonts/Quicksand/static/Quicksand-Regular.ttf",
     as: "font",
     type: "font/ttf",
     crossOrigin: "anonymous"
@@ -59,11 +59,6 @@ export const links: LinksFunction = () => [
     rel: "preconnect",
     href: "https://s8ib0k5c81.execute-api.us-east-1.amazonaws.com",
   },
-  {
-    rel: "preconnect",
-    href: "https://s8ib0k5c81.execute-api.us-east-1.amazonaws.com", // Change to your image host
-    crossOrigin: "anonymous"
-  }
   
 ];
 

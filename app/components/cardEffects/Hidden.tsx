@@ -6,7 +6,7 @@ interface HiddenProps {
 export default function Hidden({ children, unless }: HiddenProps) {
     return (
         <div>
-            {unless ? children : <div className="size-24" />}
+            {unless ? children : <div className="size-12 sm:size-24" />}
         </div>
     )
 }
