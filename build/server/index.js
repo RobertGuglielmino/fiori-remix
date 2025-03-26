@@ -1,7 +1,7 @@
 import { jsx, jsxs, Fragment } from "react/jsx-runtime";
 import { PassThrough } from "node:stream";
 import { createReadableStreamFromReadable, defer, json, redirect } from "@remix-run/node";
-import { RemixServer, useLocation, useNavigate, useSearchParams, useNavigation, Meta, Links, Outlet, Scripts, useLoaderData, Form, useRouteError, isRouteErrorResponse } from "@remix-run/react";
+import { RemixServer, useLocation, useNavigate, useSearchParams, useNavigation, Meta, Links, Outlet, Scripts, useLoaderData, Form, json as json$1, useRouteError, isRouteErrorResponse } from "@remix-run/react";
 import * as isbotModule from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
 import React, { createContext, useReducer, useContext, useState, useRef, useCallback, useEffect } from "react";
@@ -119,7 +119,7 @@ const entryServer = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineP
   __proto__: null,
   default: handleRequest
 }, Symbol.toStringTag, { value: "Module" }));
-const stylesheet = "/assets/tailwind-DkM4rao3.css";
+const stylesheet = "/assets/tailwind-BPwYzXDW.css";
 function centsToDollars(amount) {
   let unit = amount;
   const cents = unit % 100;
@@ -403,7 +403,8 @@ const links = () => [
     as: "image",
     type: "image/webp",
     imagesrcset: "/images/FlipItHeader.webp",
-    fetchpriority: "high"
+    fetchpriority: "high",
+    crossOrigin: "anonymous"
   },
   {
     rel: "preload",
@@ -411,7 +412,8 @@ const links = () => [
     as: "image",
     type: "image/webp",
     imagesrcset: "/images/FlipItHeader.webp",
-    fetchpriority: "high"
+    fetchpriority: "high",
+    crossOrigin: "anonymous"
   },
   {
     rel: "preload",
@@ -1518,16 +1520,11 @@ function formatBoosterType(type) {
   return words.join(" ");
 }
 function PackSelector() {
-  const packSetTypes = useLoaderData();
-  Object.getOwnPropertyNames(packSetTypes).map(
-    (key) => {
-      return { [key]: packSetTypes[key] };
-    }
-  );
+  const { apiData } = useLoaderData();
   const [selectedSet, setSelectedSet] = useState("");
-  const setKeys = Object.keys(packSetTypes).sort((a, b) => packSetTypes[a]["releaseDate"] < packSetTypes[b]["releaseDate"] ? 1 : -1);
+  const setKeys = Object.keys(apiData).sort((a, b) => apiData[a]["releaseDate"] < apiData[b]["releaseDate"] ? 1 : -1);
   function generateSetTypes(set) {
-    return packSetTypes[set]["boosterTypes"].map((type) => /* @__PURE__ */ jsx("option", { value: type, children: formatBoosterType(type) }, type));
+    return apiData[set]["boosterTypes"].map((type) => /* @__PURE__ */ jsx("option", { value: type, children: formatBoosterType(type) }, type));
   }
   return /* @__PURE__ */ jsx(Form, { action: "/open", method: "get", className: "", children: /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-3 h-24 w-72", children: [
     /* @__PURE__ */ jsxs("div", { className: "col-span-2 flex flex-col flex-shrink-1", children: [
@@ -1546,7 +1543,7 @@ function PackSelector() {
             setKeys.map((set) => /* @__PURE__ */ jsxs("option", { value: set, children: [
               set,
               " - ",
-              packSetTypes[set]["name"]
+              apiData[set]["name"]
             ] }, set))
           ]
         }
@@ -1568,66 +1565,85 @@ function PackSelector() {
     ] })
   ] }) });
 }
+function Instructions() {
+  return /* @__PURE__ */ jsxs("div", { className: "sm:px-24 md:px-36 text-center", children: [
+    /* @__PURE__ */ jsxs("p", { className: "text-md italic", children: [
+      "Choose a ",
+      /* @__PURE__ */ jsx("span", { className: "underline", children: "Magic Set" }),
+      " and ",
+      /* @__PURE__ */ jsx("span", { className: "underline", children: "Booster Type" }),
+      "."
+    ] }),
+    /* @__PURE__ */ jsxs("div", { className: "flex items-center flex-col", children: [
+      /* @__PURE__ */ jsx("h2", { className: "text-2xl w-3/4 md:w-1/2 underline text-left mt-4", children: "HOW TO PLAY" }),
+      /* @__PURE__ */ jsxs("ol", { className: "text-3xl w-3/4 md:w-1/2 text-left list-none", children: [
+        /* @__PURE__ */ jsxs("li", { className: "mb-2", children: [
+          /* @__PURE__ */ jsx("span", { className: "italic", children: "1)" }),
+          " Open a pack of cards, shuffle them face down."
+        ] }),
+        /* @__PURE__ */ jsxs("li", { className: "mb-2", children: [
+          /* @__PURE__ */ jsx("span", { className: "italic", children: "2)" }),
+          " ",
+          /* @__PURE__ */ jsx("span", { className: "text-green-600 font-bold", children: "FLIP" }),
+          " a card face up and ",
+          /* @__PURE__ */ jsx("span", { className: "underline decoration-dashed decoration-green-500", children: "keep" }),
+          " it."
+        ] }),
+        /* @__PURE__ */ jsxs("li", { className: "mb-2", children: [
+          /* @__PURE__ */ jsx("span", { className: "italic", children: "3)" }),
+          " ",
+          /* @__PURE__ */ jsx("span", { className: "text-red-800 font-bold", children: "RIP" }),
+          " a card and ",
+          /* @__PURE__ */ jsx("span", { className: "underline decoration-solid decoration-red-700", children: "destroy" }),
+          " it forever."
+        ] }),
+        /* @__PURE__ */ jsxs("li", { className: "mb-2", children: [
+          /* @__PURE__ */ jsx("span", { className: "italic", children: "4)" }),
+          " Repeat 2 and 3 until all cards are gone."
+        ] })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxs("div", { className: "text-lg mt-8", children: [
+      "Engaging in this activity with real cards is exhilarating, and disgusting.",
+      /* @__PURE__ */ jsx("br", {}),
+      "This website lets you simulate that experience."
+    ] })
+  ] });
+}
 async function loader$1() {
   console.log("data");
   const response = await fetch("https://s8ib0k5c81.execute-api.us-east-1.amazonaws.com/prod/flip-or-rip-lambda/sets").then(async (res) => {
     const data = await res.json();
-    console.log(data);
     return data.body;
   });
   invariant(response, "Missing data from scryfall");
-  return response;
+  json$1(
+    {
+      apiData: response
+    },
+    {
+      headers: {
+        "Cache-Control": "public, max-age=3600, s-maxage=86400"
+      }
+    }
+  );
+  return json$1(
+    {
+      apiData: response
+    },
+    {
+      headers: {
+        "Cache-Control": "public, max-age=3600, s-maxage=86400"
+      }
+    }
+  );
 }
 function Index() {
   const navigate = useNavigate();
   return /* @__PURE__ */ jsxs("div", { className: "bg-stone-200", children: [
     /* @__PURE__ */ jsx("div", { className: "center m-2", children: /* @__PURE__ */ jsxs("div", { className: "text-center font-quicksand content-center", children: [
       /* @__PURE__ */ jsx("div", { className: "flex flex-row justify-center text-xl", children: /* @__PURE__ */ jsx(PackSelector, {}) }),
-      /* @__PURE__ */ jsxs("div", { className: "sm:px-24 md:px-36 text-center", children: [
-        /* @__PURE__ */ jsxs("span", { className: "text-md italic", children: [
-          "Choose a ",
-          /* @__PURE__ */ jsx("span", { className: "underline", children: "Magic Set" }),
-          " and ",
-          /* @__PURE__ */ jsx("span", { className: "underline", children: "Booster Type" }),
-          ".",
-          /* @__PURE__ */ jsx("br", {})
-        ] }),
-        /* @__PURE__ */ jsxs("div", { className: "flex items-center flex-col", children: [
-          /* @__PURE__ */ jsxs("div", { className: "text-2xl w-3/4 md:w-1/2 underline text-left", children: [
-            /* @__PURE__ */ jsx("br", {}),
-            "HOW TO PLAY"
-          ] }),
-          /* @__PURE__ */ jsxs("div", { className: "text-3xl w-3/4 md:w-1/2 text-left", children: [
-            /* @__PURE__ */ jsx("span", { className: "italic", children: "1)" }),
-            " Open a pack of cards, shuffle them face down.",
-            /* @__PURE__ */ jsx("br", {}),
-            /* @__PURE__ */ jsx("span", { className: "italic", children: "2)" }),
-            " ",
-            /* @__PURE__ */ jsx("span", { className: "text-green-600 font-bold", children: "FLIP" }),
-            " a card face up and ",
-            /* @__PURE__ */ jsx("span", { className: "underline decoration-dashed decoration-green-500", children: "keep" }),
-            " it.",
-            /* @__PURE__ */ jsx("br", {}),
-            /* @__PURE__ */ jsx("span", { className: "italic", children: "3)" }),
-            " ",
-            /* @__PURE__ */ jsx("span", { className: "text-red-800 font-bold", children: "RIP" }),
-            " a card and ",
-            /* @__PURE__ */ jsx("span", { className: "underline decoration-solid decoration-red-700", children: "destroy" }),
-            " it forever.",
-            /* @__PURE__ */ jsx("br", {}),
-            /* @__PURE__ */ jsx("span", { className: "italic", children: "4)" }),
-            " Repeat 2 and 3 until all cards are gone."
-          ] })
-        ] }),
-        /* @__PURE__ */ jsx("br", {}),
-        /* @__PURE__ */ jsx("br", {}),
-        /* @__PURE__ */ jsxs("div", { className: "text-lg", children: [
-          "Engaging in this activity with real cards is exhilarating, and disgusting.",
-          /* @__PURE__ */ jsx("br", {}),
-          " This website lets you simulate that experience.",
-          /* @__PURE__ */ jsx("br", {})
-        ] })
-      ] })
+      /* @__PURE__ */ jsx(Instructions, {})
     ] }) }),
     /* @__PURE__ */ jsxs("div", { className: "flex flex-row justify-center gap-2 pb-4", children: [
       /* @__PURE__ */ jsx("button", { className: "disabled bg-amber-500 grayscale font-quicksand p-4 md:p-8 pb-2 rounded", children: /* @__PURE__ */ jsxs("div", { className: "object-center flex flex-col items-center justify-center", children: [
@@ -2089,7 +2105,7 @@ const route11 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.definePrope
   default: Open,
   loader
 }, Symbol.toStringTag, { value: "Module" }));
-const serverManifest = { "entry": { "module": "/assets/entry.client-CWF3EnNN.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/components-YI_IdiTz.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/root-DCbtNdj0.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/components-YI_IdiTz.js", "/assets/centsToDollars-BemH1-NO.js", "/assets/FIORIContext-B_fc8As3.js", "/assets/HomeButton-BbFWqNW7.js"], "css": [] }, "routes/resources.packs": { "id": "routes/resources.packs", "parentId": "root", "path": "resources/packs", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/resources.packs-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/resources.sets": { "id": "routes/resources.sets", "parentId": "root", "path": "resources/sets", "index": void 0, "caseSensitive": void 0, "hasAction": true, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/resources.sets-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/sitemap[.]xml": { "id": "routes/sitemap[.]xml", "parentId": "root", "path": "sitemap.xml", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/sitemap_._xml-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/robots[.]txt": { "id": "routes/robots[.]txt", "parentId": "root", "path": "robots.txt", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/robots_._txt-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/stats.global": { "id": "routes/stats.global", "parentId": "root", "path": "stats/global", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/stats.global-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/stats._index": { "id": "routes/stats._index", "parentId": "root", "path": "stats", "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/stats._index-kzf6nVKu.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/centsToDollars-BemH1-NO.js", "/assets/HomeButton-BbFWqNW7.js", "/assets/FIORIContext-B_fc8As3.js"], "css": [] }, "routes/stats.user": { "id": "routes/stats.user", "parentId": "root", "path": "stats/user", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/stats.user-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/settings": { "id": "routes/settings", "parentId": "root", "path": "settings", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/settings-Cqmo3WfK.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/HomeButton-BbFWqNW7.js", "/assets/FIORIContext-B_fc8As3.js"], "css": [] }, "routes/_index": { "id": "routes/_index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/_index-C-rkilg8.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/components-YI_IdiTz.js"], "css": [] }, "routes/info": { "id": "routes/info", "parentId": "root", "path": "info", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/info-etz5tnfk.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/HomeButton-BbFWqNW7.js", "/assets/FIORIContext-B_fc8As3.js"], "css": [] }, "routes/open": { "id": "routes/open", "parentId": "root", "path": "open", "index": void 0, "caseSensitive": void 0, "hasAction": true, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": true, "module": "/assets/open-Ca14EaB5.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/centsToDollars-BemH1-NO.js", "/assets/FIORIContext-B_fc8As3.js", "/assets/components-YI_IdiTz.js"], "css": [] } }, "url": "/assets/manifest-b4d46ebf.js", "version": "b4d46ebf" };
+const serverManifest = { "entry": { "module": "/assets/entry.client-CWF3EnNN.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/components-YI_IdiTz.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/root-BIuO_tkf.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/components-YI_IdiTz.js", "/assets/centsToDollars-BemH1-NO.js", "/assets/FIORIContext-B_fc8As3.js", "/assets/HomeButton-BbFWqNW7.js"], "css": [] }, "routes/resources.packs": { "id": "routes/resources.packs", "parentId": "root", "path": "resources/packs", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/resources.packs-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/resources.sets": { "id": "routes/resources.sets", "parentId": "root", "path": "resources/sets", "index": void 0, "caseSensitive": void 0, "hasAction": true, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/resources.sets-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/sitemap[.]xml": { "id": "routes/sitemap[.]xml", "parentId": "root", "path": "sitemap.xml", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/sitemap_._xml-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/robots[.]txt": { "id": "routes/robots[.]txt", "parentId": "root", "path": "robots.txt", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/robots_._txt-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/stats.global": { "id": "routes/stats.global", "parentId": "root", "path": "stats/global", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/stats.global-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/stats._index": { "id": "routes/stats._index", "parentId": "root", "path": "stats", "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/stats._index-kzf6nVKu.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/centsToDollars-BemH1-NO.js", "/assets/HomeButton-BbFWqNW7.js", "/assets/FIORIContext-B_fc8As3.js"], "css": [] }, "routes/stats.user": { "id": "routes/stats.user", "parentId": "root", "path": "stats/user", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/stats.user-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/settings": { "id": "routes/settings", "parentId": "root", "path": "settings", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/settings-Cqmo3WfK.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/HomeButton-BbFWqNW7.js", "/assets/FIORIContext-B_fc8As3.js"], "css": [] }, "routes/_index": { "id": "routes/_index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/_index-B28pe9Hj.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/components-YI_IdiTz.js"], "css": [] }, "routes/info": { "id": "routes/info", "parentId": "root", "path": "info", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/info-etz5tnfk.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/HomeButton-BbFWqNW7.js", "/assets/FIORIContext-B_fc8As3.js"], "css": [] }, "routes/open": { "id": "routes/open", "parentId": "root", "path": "open", "index": void 0, "caseSensitive": void 0, "hasAction": true, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": true, "module": "/assets/open-Ca14EaB5.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/centsToDollars-BemH1-NO.js", "/assets/FIORIContext-B_fc8As3.js", "/assets/components-YI_IdiTz.js"], "css": [] } }, "url": "/assets/manifest-378cd038.js", "version": "378cd038" };
 const mode = "production";
 const assetsBuildDirectory = "build\\client";
 const basename = "/";

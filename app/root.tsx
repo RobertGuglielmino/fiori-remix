@@ -31,7 +31,8 @@ export const links: LinksFunction = () => [
     as: "image",
     type: "image/webp",
     imagesrcset: "/images/FlipItHeader.webp",
-    fetchpriority: "high"  
+    fetchpriority: "high",
+    crossOrigin: "anonymous",
   },
   {
     rel: "preload",
@@ -39,7 +40,8 @@ export const links: LinksFunction = () => [
     as: "image",
     type: "image/webp",
     imagesrcset: "/images/FlipItHeader.webp",
-    fetchpriority: "high"  
+    fetchpriority: "high",
+    crossOrigin: "anonymous",
   },
   {
     rel: "preload",

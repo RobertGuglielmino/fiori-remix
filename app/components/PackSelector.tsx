@@ -11,16 +11,16 @@ function formatBoosterType(type: any) {
 }
 
 export default function PackSelector() {
-  const packSetTypes = useLoaderData<typeof loader>();
-  const formattedRes = Object.getOwnPropertyNames(packSetTypes).map(
-    (key) => { return { [key]: packSetTypes[key] }; }
-  );
+  const {apiData} = useLoaderData<typeof loader>();
+  // const formattedRes = Object.getOwnPropertyNames(packSetTypes).map(
+  //   (key) => { return { [key]: packSetTypes[key] }; }
+  // );
   const [selectedSet, setSelectedSet] = useState<string>("");
-  const setKeys = Object.keys(packSetTypes).sort((a, b) => packSetTypes[a]["releaseDate"] < packSetTypes[b]["releaseDate"] ? 1 : -1);
+  const setKeys = Object.keys(apiData).sort((a, b) => apiData[a]["releaseDate"] < apiData[b]["releaseDate"] ? 1 : -1);
 
 
   function generateSetTypes(set: string) {
-    return packSetTypes[set]["boosterTypes"].map((type: any) => (<option key={type} value={type}>{formatBoosterType(type)}</option>))
+    return apiData[set]["boosterTypes"].map((type: any) => (<option key={type} value={type}>{formatBoosterType(type)}</option>))
   }
 
   return (
@@ -36,7 +36,7 @@ export default function PackSelector() {
             }}>
 
             <option key="-" disabled value="-">Pick a Magic Set!</option>
-            {setKeys.map((set: any) => (<option key={set} value={set}>{set} - {packSetTypes[set]["name"]}</option>))}
+            {setKeys.map((set: any) => (<option key={set} value={set}>{set} - {apiData[set]["name"]}</option>))}
           </select>
           <select className='m-1 grow rounded'
             id="pack-type"

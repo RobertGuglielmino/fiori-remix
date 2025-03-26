@@ -1,49 +1,49 @@
 import PackSelector from "../components/PackSelector"
 import invariant from "tiny-invariant";
-import { useNavigate } from "@remix-run/react";
+import { json,  useNavigate } from "@remix-run/react";
+import Instructions from "~/components/Instructions";
 
 export async function loader() {
   console.log("data");
   const response = await fetch('https://s8ib0k5c81.execute-api.us-east-1.amazonaws.com/prod/flip-or-rip-lambda/sets')
     .then(async res => {
       const data = await res.json();
-      console.log(data);
       return data.body;
     });
   invariant(response, "Missing data from scryfall");
 
-  return response;
+  const jsonTime = json(
+    {
+      apiData: response
+    },
+    {
+      headers: {
+        "Cache-Control": "public, max-age=3600, s-maxage=86400"
+      }
+    }
+  );
+
+  return json(
+    {
+      apiData: response
+    },
+    {
+      headers: {
+        "Cache-Control": "public, max-age=3600, s-maxage=86400"
+      }
+    }
+  );
 }
 
 export default function Index() {
   const navigate = useNavigate();
-
   return (<div className="bg-stone-200">
     <div className="center m-2">
       <div className="text-center font-quicksand content-center">
         <div className="flex flex-row justify-center text-xl">
           <PackSelector />
         </div>
-        <div className="sm:px-24 md:px-36 text-center">
-          <span className="text-md italic">
-            Choose a <span className="underline">Magic Set</span> and <span className="underline">Booster Type</span>.<br />
-          </span>
-          <div className="flex items-center flex-col">
-            <div className="text-2xl w-3/4 md:w-1/2 underline text-left">
-              <br />HOW TO PLAY
-            </div>
-            <div className="text-3xl w-3/4 md:w-1/2 text-left">
-              <span className="italic">1)</span> Open a pack of cards, shuffle them face down.
-              <br /><span className="italic">2)</span> <span className="text-green-600 font-bold">FLIP</span> a card face up and <span className="underline decoration-dashed decoration-green-500">keep</span> it.
-              <br /><span className="italic">3)</span> <span className="text-red-800 font-bold">RIP</span> a card and <span className="underline decoration-solid decoration-red-700">destroy</span> it forever.
-              <br /><span className="italic">4)</span> Repeat 2 and 3 until all cards are gone.
-            </div>
-          </div>
-          <br /><br />
-          <div className="text-lg">
-            Engaging in this activity with real cards is exhilarating, and disgusting.<br /> This website lets you simulate that experience.<br />
-          </div>
-        </div>
+        <Instructions />
       </div>
     </div>
     <div className="flex flex-row justify-center gap-2 pb-4">
