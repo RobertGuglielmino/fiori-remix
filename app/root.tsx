@@ -14,6 +14,7 @@ import LoadingBox from "./components/LoadingBox";
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from "@vercel/speed-insights/remix"
 
+
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
   {
@@ -27,10 +28,9 @@ export const links: LinksFunction = () => [
   },
   {
     rel: "preload",
-    href: "/images/FlipItHeader.webp",  
+    href: "/images/FlipItHeader.webp",
     as: "image",
     type: "image/webp",
-    imagesrcset: "/images/FlipItHeader.webp",
     fetchpriority: "high",
     crossOrigin: "anonymous",
   },
@@ -39,7 +39,6 @@ export const links: LinksFunction = () => [
     href: "/images/RipItHeader.webp",
     as: "image",
     type: "image/webp",
-    imagesrcset: "/images/FlipItHeader.webp",
     fetchpriority: "high",
     crossOrigin: "anonymous",
   },
