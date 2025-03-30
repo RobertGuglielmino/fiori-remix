@@ -32,7 +32,6 @@ export const links: LinksFunction = () => [
     as: "image",
     type: "image/webp",
     fetchpriority: "high",
-    crossOrigin: "anonymous",
   },
   {
     rel: "preload",
@@ -40,21 +39,18 @@ export const links: LinksFunction = () => [
     as: "image",
     type: "image/webp",
     fetchpriority: "high",
-    crossOrigin: "anonymous",
   },
   {
     rel: "preload",
     href: "/fonts/Quicksand/static/Quicksand-Bold.ttf",
     as: "font",
-    type: "font/ttf",
-    crossOrigin: "anonymous"
+    type: "font/ttf"
   },
   {
     rel: "preload",
     href: "/fonts/Quicksand/static/Quicksand-Regular.ttf",
     as: "font",
-    type: "font/ttf",
-    crossOrigin: "anonymous"
+    type: "font/ttf"
   },
   {
     rel: "preconnect",
