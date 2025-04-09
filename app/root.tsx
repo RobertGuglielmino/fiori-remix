@@ -42,13 +42,7 @@ export const links: LinksFunction = () => [
   },
   {
     rel: "preload",
-    href: "/fonts/Quicksand/static/Quicksand-Bold.ttf",
-    as: "font",
-    type: "font/ttf"
-  },
-  {
-    rel: "preload",
-    href: "/fonts/Quicksand/static/Quicksand-Regular.ttf",
+    href: "/fonts/Quicksand/Quicksand-VariableFont_wght.ttf",
     as: "font",
     type: "font/ttf"
   },

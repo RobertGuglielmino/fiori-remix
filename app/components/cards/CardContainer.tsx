@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import centsToDollars from './../../utils/centsToDollars';
 import EnhancedCard from './EnhancedCard';
-import cardBack from '../../../images/mtg_back.png';
+import cardBack from '../../../images/mtg_back.webp';
 import RippedCard from './RippedCard';
 import FlippedCard from './FlippedCard';
 
