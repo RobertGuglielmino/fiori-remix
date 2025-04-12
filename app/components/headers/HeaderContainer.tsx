@@ -22,33 +22,34 @@ export default function HeaderContainer({ changeValue }: HeaderContainerProps) {
     let packFullyOpened = state!.action === "END";
 
     return (
-        <div className="place-content-evenly flex items-center flex-row gap-2 sm:gap-6 m-4">
-            <div className="hidden sm:block">
-                <Hidden unless={packFullyOpened}>
-                    <HomeButton />
-                </Hidden>
+        <div className="flex justify-center">
+            <div className="place-content-evenly flex items-center flex-row gap-2 sm:gap-6 m-4">
+                <div className="hidden sm:block">
+                    <Hidden unless={packFullyOpened}>
+                        <HomeButton />
+                    </Hidden>
+                </div>
+
+                <div className="mx-6 sm:mx-0">
+                    <Hidden unless={packGenerated}>
+                        <ValueSavedBox />
+                    </Hidden>
+                </div>
+
+                <FlipRipDisplay />
+
+                <div className="mx-6 sm:mx-0">
+                    <Hidden unless={packGenerated}>
+                        <ValueLostBox />
+                    </Hidden>
+                </div>
+
+                <div className="hidden sm:block">
+                    <Hidden unless={packFullyOpened}>
+                        {state!.hardMode ? <HardModeButton /> : <PlayAgainButton />}
+                    </Hidden>
+                </div>
             </div>
-
-            <div className="mx-6 sm:mx-0">
-                <Hidden unless={packGenerated}>
-                    <ValueSavedBox />
-                </Hidden>
-            </div>
-
-            <FlipRipDisplay />
-
-            <div className="mx-6 sm:mx-0">
-                <Hidden unless={packGenerated}>
-                    <ValueLostBox />
-                </Hidden>
-            </div>
-
-            <div className="hidden sm:block">
-                <Hidden unless={packFullyOpened}>
-                    {state!.hardMode ? <HardModeButton /> : <PlayAgainButton />}
-                </Hidden>
-            </div>
-
         </div>
     );
 };

@@ -1,12 +1,14 @@
 import { useState, useRef, useCallback } from 'react';
 
 interface EnhancedCardProps {
-  src: string;
   alt: string;
   handleCardClick: () => void;
 }
 
-export default function EnhancedCard ({ src, alt, handleCardClick }: EnhancedCardProps) {
+export default function EnhancedCard ({ alt, handleCardClick }: EnhancedCardProps) {
+
+  const MTG_BACK = "https://d3vjinhen5j20w.cloudfront.net/mtg_back.webp"
+
   const [style, setStyle] = useState({});
   const cardRef = useRef<HTMLDivElement | null>(null);
   const frameRef = useRef<number | null>(null);
@@ -79,7 +81,7 @@ export default function EnhancedCard ({ src, alt, handleCardClick }: EnhancedCar
         onMouseLeave={handleMouseLeave}
       >
         <img
-          src={src}
+          src={MTG_BACK}
           alt={alt || "Interactive image"}
           className={`w-full h-full object-cover `}
           loading="lazy"

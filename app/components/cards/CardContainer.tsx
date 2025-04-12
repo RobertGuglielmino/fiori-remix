@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import centsToDollars from './../../utils/centsToDollars';
 import EnhancedCard from './EnhancedCard';
-import cardBack from '../../../images/mtg_back.webp';
 import RippedCard from './RippedCard';
 import FlippedCard from './FlippedCard';
 
@@ -20,6 +19,7 @@ interface CardContainerProps {
 
 export default function CardContainer({ name, cents, image, cf_image, status, foil, rotation, maskImage, handleCardClick }: CardContainerProps) {
     const [maskPosition, setMaskPosition] = useState('25%_25%');
+    const MTG_BACK = "https://d3vjinhen5j20w.cloudfront.net/mtg_back.webp"
     
     // Preload images when component mounts
     useEffect(() => {
@@ -29,7 +29,7 @@ export default function CardContainer({ name, cents, image, cf_image, status, fo
         
         // Card back is likely already cached since it's imported, but preload just in case
         const backImage = new Image();
-        backImage.src = cardBack;
+        backImage.src = MTG_BACK;
     }, [cf_image]);
 
     let revealed = status === "FLIPPED" || status === "RIPPED";
@@ -46,7 +46,6 @@ export default function CardContainer({ name, cents, image, cf_image, status, fo
                     }`}
                 >
                     <EnhancedCard 
-                        src={cardBack} 
                         alt="Card Back" 
                         handleCardClick={handleCardClick} 
                     />
@@ -79,7 +78,6 @@ export default function CardContainer({ name, cents, image, cf_image, status, fo
                 {/* Invisible placeholder to maintain correct dimensions */}
                 <div className="invisible">
                     <EnhancedCard 
-                        src={cardBack} 
                         alt="placeholder" 
                         handleCardClick={() => {}} 
                     />

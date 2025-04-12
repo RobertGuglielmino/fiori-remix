@@ -5,6 +5,7 @@ import Instructions from "~/components/Instructions";
 
 export async function loader() {
   console.log("data");
+  const start = Date.now();
   const response = await fetch('https://s8ib0k5c81.execute-api.us-east-1.amazonaws.com/prod/flip-or-rip-lambda/sets')
     .then(async res => {
       const data = await res.json();
@@ -22,6 +23,9 @@ export async function loader() {
       }
     }
   );
+
+
+  console.log(`seconds elapsed = ${Math.floor(Date.now() - start / 1000)}`);
 
   return json(
     {

@@ -119,7 +119,7 @@ const entryServer = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineP
   __proto__: null,
   default: handleRequest
 }, Symbol.toStringTag, { value: "Module" }));
-const stylesheet = "/assets/tailwind-oyCAhueT.css";
+const stylesheet = "/assets/tailwind-C2RdnvEB.css";
 function centsToDollars(amount) {
   let unit = amount;
   const cents = unit % 100;
@@ -280,16 +280,16 @@ function ValueSavedBox() {
     /* @__PURE__ */ jsx("span", { className: `font-kanit text-4xl label transition duration-150`, children: "Saved" })
   ] }) });
 }
-const fioriFirst = "/images/FlipItHeader.webp";
-const fioriEnd = "/images/RipItHeader.webp";
 function FlipRipDisplay() {
   const state = useFIORI();
   const location = useLocation();
+  const FIORI_FLIP_IMAGE = "https://d3vjinhen5j20w.cloudfront.net/FlipItHeader.webp";
+  const FIORI_RIP_IMAGE = "https://d3vjinhen5j20w.cloudfront.net/RipItHeader.webp";
   let toFlip = state.action === "FLIP" || state.action === "END" || location.pathname == "/" || location.pathname == "/stats" || location.pathname == "/info" || location.pathname == "/settings";
   let toRip = state.action === "RIP" || state.action === "END" || location.pathname == "/" || location.pathname == "/stats" || location.pathname == "/info" || location.pathname == "/settings";
   return /* @__PURE__ */ jsx(Fragment, { children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row w-full md:gap-2 h-100 overflow-hidden", children: [
-    /* @__PURE__ */ jsx("div", { className: "w-full md:w-auto flex justify-center", children: /* @__PURE__ */ jsx("img", { fetchPriority: "high", className: `${toFlip ? "opacity-100" : "opacity-25"} h-25 w-auto object-contain transition duration-150`, src: fioriFirst, alt: "" }) }),
-    /* @__PURE__ */ jsx("div", { className: "w-full md:w-auto flex justify-center", children: /* @__PURE__ */ jsx("img", { fetchPriority: "high", className: `${toRip ? "opacity-100" : "opacity-25"} h-25 w-auto object-contain transition duration-150`, src: fioriEnd, alt: "" }) })
+    /* @__PURE__ */ jsx("div", { className: "w-full md:w-auto flex justify-center", children: /* @__PURE__ */ jsx("img", { fetchPriority: "high", className: `${toFlip ? "opacity-100" : "opacity-25"} h-25 w-auto object-contain transition duration-150`, src: FIORI_FLIP_IMAGE, alt: "" }) }),
+    /* @__PURE__ */ jsx("div", { className: "w-full md:w-auto flex justify-center", children: /* @__PURE__ */ jsx("img", { fetchPriority: "high", className: `${toRip ? "opacity-100" : "opacity-25"} h-25 w-auto object-contain transition duration-150`, src: FIORI_RIP_IMAGE, alt: "" }) })
   ] }) });
 }
 function PlayAgainButton() {
@@ -369,13 +369,13 @@ function HeaderContainer({ changeValue }) {
   const path = useLocation();
   let packGenerated = path.pathname === "/open";
   let packFullyOpened = state.action === "END";
-  return /* @__PURE__ */ jsxs("div", { className: "place-content-evenly flex items-center flex-row gap-2 sm:gap-6 m-4", children: [
+  return /* @__PURE__ */ jsx("div", { className: "flex justify-center", children: /* @__PURE__ */ jsxs("div", { className: "place-content-evenly flex items-center flex-row gap-2 sm:gap-6 m-4", children: [
     /* @__PURE__ */ jsx("div", { className: "hidden sm:block", children: /* @__PURE__ */ jsx(Hidden, { unless: packFullyOpened, children: /* @__PURE__ */ jsx(HomeButton, {}) }) }),
     /* @__PURE__ */ jsx("div", { className: "mx-6 sm:mx-0", children: /* @__PURE__ */ jsx(Hidden, { unless: packGenerated, children: /* @__PURE__ */ jsx(ValueSavedBox, {}) }) }),
     /* @__PURE__ */ jsx(FlipRipDisplay, {}),
     /* @__PURE__ */ jsx("div", { className: "mx-6 sm:mx-0", children: /* @__PURE__ */ jsx(Hidden, { unless: packGenerated, children: /* @__PURE__ */ jsx(ValueLostBox, {}) }) }),
     /* @__PURE__ */ jsx("div", { className: "hidden sm:block", children: /* @__PURE__ */ jsx(Hidden, { unless: packFullyOpened, children: state.hardMode ? /* @__PURE__ */ jsx(HardModeButton, {}) : /* @__PURE__ */ jsx(PlayAgainButton, {}) }) })
-  ] });
+  ] }) });
 }
 function LoadingBox() {
   return /* @__PURE__ */ jsxs("div", { className: "flex justify-center", children: [
@@ -1600,6 +1600,7 @@ function Instructions() {
 }
 async function loader$1() {
   console.log("data");
+  const start = Date.now();
   const response = await fetch("https://s8ib0k5c81.execute-api.us-east-1.amazonaws.com/prod/flip-or-rip-lambda/sets").then(async (res) => {
     const data = await res.json();
     return data.body;
@@ -1615,6 +1616,7 @@ async function loader$1() {
       }
     }
   );
+  console.log(`seconds elapsed = ${Math.floor(Date.now() - start / 1e3)}`);
   return json$1(
     {
       apiData: response
@@ -1732,7 +1734,8 @@ const route10 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.definePrope
   __proto__: null,
   default: Info
 }, Symbol.toStringTag, { value: "Module" }));
-function EnhancedCard({ src, alt, handleCardClick }) {
+function EnhancedCard({ alt, handleCardClick }) {
+  const MTG_BACK = "https://d3vjinhen5j20w.cloudfront.net/mtg_back.webp";
   const [style, setStyle] = useState({});
   const cardRef = useRef(null);
   const frameRef = useRef(null);
@@ -1793,7 +1796,7 @@ function EnhancedCard({ src, alt, handleCardClick }) {
       children: /* @__PURE__ */ jsx(
         "img",
         {
-          src,
+          src: MTG_BACK,
           alt: alt || "Interactive image",
           className: `w-full h-full object-cover `,
           loading: "lazy",
@@ -1803,18 +1806,17 @@ function EnhancedCard({ src, alt, handleCardClick }) {
     }
   ) });
 }
-const cardBack = "/assets/mtg_back-CRvzDNK1.webp";
 function RippedCard({
   maskImage,
   maskPosition,
   src
 }) {
   const MASK_IMAGES = [
-    `mask-image-[url(/images/masks/mask1.webp)]`,
-    `mask-image-[url(/images/masks/mask2.webp)]`,
-    `mask-image-[url(/images/masks/mask3.webp)]`,
-    `mask-image-[url(/images/masks/mask4.webp)]`,
-    `mask-image-[url(/images/masks/mask5.webp)]`
+    `mask-image-[url(https://d3vjinhen5j20w.cloudfront.net/mask1.webp)]`,
+    `mask-image-[url(https://d3vjinhen5j20w.cloudfront.net/mask2.webp)]`,
+    `mask-image-[url(https://d3vjinhen5j20w.cloudfront.net/mask3.webp)]`,
+    `mask-image-[url(https://d3vjinhen5j20w.cloudfront.net/mask4.webp)]`,
+    `mask-image-[url(https://d3vjinhen5j20w.cloudfront.net/mask5.webp)]`
   ];
   return /* @__PURE__ */ jsx("div", { className: "relative w-full h-full", children: /* @__PURE__ */ jsx(
     "img",
@@ -1841,11 +1843,12 @@ function FlippedCard({ src, alt, foil }) {
 }
 function CardContainer({ name, cents, image, cf_image, status, foil, rotation, maskImage, handleCardClick }) {
   const [maskPosition, setMaskPosition] = useState("25%_25%");
+  const MTG_BACK = "https://d3vjinhen5j20w.cloudfront.net/mtg_back.webp";
   useEffect(() => {
     const frontImage = new Image();
     frontImage.src = cf_image;
     const backImage = new Image();
-    backImage.src = cardBack;
+    backImage.src = MTG_BACK;
   }, [cf_image]);
   let revealed = status === "FLIPPED" || status === "RIPPED";
   const nonBreakingSpace = " ";
@@ -1858,7 +1861,6 @@ function CardContainer({ name, cents, image, cf_image, status, foil, rotation, m
           children: /* @__PURE__ */ jsx(
             EnhancedCard,
             {
-              src: cardBack,
               alt: "Card Back",
               handleCardClick
             }
@@ -1896,7 +1898,6 @@ function CardContainer({ name, cents, image, cf_image, status, foil, rotation, m
       /* @__PURE__ */ jsx("div", { className: "invisible", children: /* @__PURE__ */ jsx(
         EnhancedCard,
         {
-          src: cardBack,
           alt: "placeholder",
           handleCardClick: () => {
           }
@@ -2117,7 +2118,7 @@ const route11 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.definePrope
   default: Open,
   loader
 }, Symbol.toStringTag, { value: "Module" }));
-const serverManifest = { "entry": { "module": "/assets/entry.client-CWF3EnNN.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/components-YI_IdiTz.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/root-DGMNi7ab.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/components-YI_IdiTz.js", "/assets/centsToDollars-BemH1-NO.js", "/assets/FIORIContext-B_fc8As3.js", "/assets/HomeButton-BbFWqNW7.js"], "css": [] }, "routes/resources.packs": { "id": "routes/resources.packs", "parentId": "root", "path": "resources/packs", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/resources.packs-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/resources.sets": { "id": "routes/resources.sets", "parentId": "root", "path": "resources/sets", "index": void 0, "caseSensitive": void 0, "hasAction": true, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/resources.sets-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/sitemap[.]xml": { "id": "routes/sitemap[.]xml", "parentId": "root", "path": "sitemap.xml", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/sitemap_._xml-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/robots[.]txt": { "id": "routes/robots[.]txt", "parentId": "root", "path": "robots.txt", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/robots_._txt-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/stats.global": { "id": "routes/stats.global", "parentId": "root", "path": "stats/global", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/stats.global-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/stats._index": { "id": "routes/stats._index", "parentId": "root", "path": "stats", "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/stats._index-kzf6nVKu.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/centsToDollars-BemH1-NO.js", "/assets/HomeButton-BbFWqNW7.js", "/assets/FIORIContext-B_fc8As3.js"], "css": [] }, "routes/stats.user": { "id": "routes/stats.user", "parentId": "root", "path": "stats/user", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/stats.user-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/settings": { "id": "routes/settings", "parentId": "root", "path": "settings", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/settings-Cqmo3WfK.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/HomeButton-BbFWqNW7.js", "/assets/FIORIContext-B_fc8As3.js"], "css": [] }, "routes/_index": { "id": "routes/_index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/_index-CtzfQ06d.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/components-YI_IdiTz.js"], "css": [] }, "routes/info": { "id": "routes/info", "parentId": "root", "path": "info", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/info-etz5tnfk.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/HomeButton-BbFWqNW7.js", "/assets/FIORIContext-B_fc8As3.js"], "css": [] }, "routes/open": { "id": "routes/open", "parentId": "root", "path": "open", "index": void 0, "caseSensitive": void 0, "hasAction": true, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": true, "module": "/assets/open-D2Q-JdZf.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/centsToDollars-BemH1-NO.js", "/assets/FIORIContext-B_fc8As3.js", "/assets/components-YI_IdiTz.js"], "css": [] } }, "url": "/assets/manifest-2a669ba4.js", "version": "2a669ba4" };
+const serverManifest = { "entry": { "module": "/assets/entry.client-CWF3EnNN.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/components-YI_IdiTz.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/root-B_7Bf-yi.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/components-YI_IdiTz.js", "/assets/centsToDollars-BemH1-NO.js", "/assets/FIORIContext-B_fc8As3.js", "/assets/HomeButton-BbFWqNW7.js"], "css": [] }, "routes/resources.packs": { "id": "routes/resources.packs", "parentId": "root", "path": "resources/packs", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/resources.packs-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/resources.sets": { "id": "routes/resources.sets", "parentId": "root", "path": "resources/sets", "index": void 0, "caseSensitive": void 0, "hasAction": true, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/resources.sets-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/sitemap[.]xml": { "id": "routes/sitemap[.]xml", "parentId": "root", "path": "sitemap.xml", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/sitemap_._xml-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/robots[.]txt": { "id": "routes/robots[.]txt", "parentId": "root", "path": "robots.txt", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/robots_._txt-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/stats.global": { "id": "routes/stats.global", "parentId": "root", "path": "stats/global", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/stats.global-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/stats._index": { "id": "routes/stats._index", "parentId": "root", "path": "stats", "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/stats._index-kzf6nVKu.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/centsToDollars-BemH1-NO.js", "/assets/HomeButton-BbFWqNW7.js", "/assets/FIORIContext-B_fc8As3.js"], "css": [] }, "routes/stats.user": { "id": "routes/stats.user", "parentId": "root", "path": "stats/user", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/stats.user-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/settings": { "id": "routes/settings", "parentId": "root", "path": "settings", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/settings-Cqmo3WfK.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/HomeButton-BbFWqNW7.js", "/assets/FIORIContext-B_fc8As3.js"], "css": [] }, "routes/_index": { "id": "routes/_index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/_index-CtzfQ06d.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/components-YI_IdiTz.js"], "css": [] }, "routes/info": { "id": "routes/info", "parentId": "root", "path": "info", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/info-etz5tnfk.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/HomeButton-BbFWqNW7.js", "/assets/FIORIContext-B_fc8As3.js"], "css": [] }, "routes/open": { "id": "routes/open", "parentId": "root", "path": "open", "index": void 0, "caseSensitive": void 0, "hasAction": true, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": true, "module": "/assets/open-CzcskFmW.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/centsToDollars-BemH1-NO.js", "/assets/FIORIContext-B_fc8As3.js", "/assets/components-YI_IdiTz.js"], "css": [] } }, "url": "/assets/manifest-6efe5519.js", "version": "6efe5519" };
 const mode = "production";
 const assetsBuildDirectory = "build\\client";
 const basename = "/";
