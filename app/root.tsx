@@ -50,6 +50,10 @@ export const links: LinksFunction = () => [
     rel: "preconnect",
     href: "https://s8ib0k5c81.execute-api.us-east-1.amazonaws.com",
   },
+  {
+    rel: "preconnect",
+    href: "https://d3vjinhen5j20w.cloudfront.net",
+  },
   
 ];
 
