@@ -28,14 +28,14 @@ export const links: LinksFunction = () => [
   },
   {
     rel: "preload",
-    href: "/images/FlipItHeader.webp",
+    href: "https://d3vjinhen5j20w.cloudfront.net/FlipItHeader.webp",
     as: "image",
     type: "image/webp",
     fetchpriority: "high",
   },
   {
     rel: "preload",
-    href: "/images/RipItHeader.webp",
+    href: "https://d3vjinhen5j20w.cloudfront.net/RipItHeader.webp",
     as: "image",
     type: "image/webp",
     fetchpriority: "high",
