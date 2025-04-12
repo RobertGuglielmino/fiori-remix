@@ -44,7 +44,8 @@ export const links: LinksFunction = () => [
     rel: "preload",
     href: "/fonts/Quicksand/Quicksand-VariableFont_wght.ttf",
     as: "font",
-    type: "font/ttf"
+    type: "font/ttf",
+    crossOrigin: "anonymous"
   },
   {
     rel: "preconnect",
