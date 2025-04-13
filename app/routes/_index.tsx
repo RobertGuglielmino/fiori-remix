@@ -4,27 +4,16 @@ import { json, useNavigate } from "@remix-run/react";
 import Instructions from "~/components/Instructions";
 
 export async function loader() {
-  console.log("data");
+  const start_perf = performance.now();
   const start = Date.now();
-  const response = await fetch('https://s8ib0k5c81.execute-api.us-east-1.amazonaws.com/prod/flip-or-rip-lambda/sets')
+  const response = await fetch("https://d3vjinhen5j20w.cloudfront.net/PACK_TYPES_BY_SET.json")
     .then(async res => {
       const data = await res.json();
-      return data.body;
+      return data;
     });
   invariant(response, "Missing data from scryfall");
 
-  const jsonTime = json(
-    {
-      apiData: response
-    },
-    {
-      headers: {
-        "Cache-Control": "public, max-age=3600, s-maxage=86400"
-      }
-    }
-  );
-
-
+  const duration = performance.now() - start_perf;
   console.log(`seconds elapsed = ${Math.floor(Date.now() - start / 1000)}`);
 
   return json(
@@ -33,7 +22,8 @@ export async function loader() {
     },
     {
       headers: {
-        "Cache-Control": "public, max-age=3600, s-maxage=86400"
+        "Cache-Control": "public, max-age=3600, s-maxage=86400",
+        "Server-Timing": `app-root;dur=${duration.toFixed(2)};desc="Root loader time"`
       }
     }
   );

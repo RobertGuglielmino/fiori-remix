@@ -48,6 +48,11 @@ export const links: LinksFunction = () => [
     crossOrigin: "anonymous"
   },
   {
+    rel: "preload",
+    href: "https://d3vjinhen5j20w.cloudfront.net/PACK_TYPES_BY_SET.json",
+    type: "application/json"
+  },
+  {
     rel: "preconnect",
     href: "https://s8ib0k5c81.execute-api.us-east-1.amazonaws.com",
   },
@@ -74,7 +79,6 @@ export const meta = () => {
     { name: "robots", content: "index, follow" }
   ];
 };
-
 
 export default function App() {
   const [changeValue, setChangeValue] = useState(100);
