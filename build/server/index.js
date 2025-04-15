@@ -119,7 +119,7 @@ const entryServer = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineP
   __proto__: null,
   default: handleRequest
 }, Symbol.toStringTag, { value: "Module" }));
-const stylesheet = "/assets/tailwind-C2RdnvEB.css";
+const stylesheet = "/assets/tailwind-BfRCh3Vu.css";
 function centsToDollars(amount) {
   let unit = amount;
   const cents = unit % 100;
@@ -432,6 +432,9 @@ const links = () => [
     href: "https://d3vjinhen5j20w.cloudfront.net"
   }
 ];
+const headers = () => ({
+  "Cache-Control": "max-age=300, s-maxage=3600"
+});
 const meta = () => {
   return [
     { title: "Flip It or Rip It" },
@@ -454,7 +457,7 @@ function App() {
   const outletFunctions = {
     changeValue
   };
-  return /* @__PURE__ */ jsxs("html", { children: [
+  return /* @__PURE__ */ jsxs("html", { lang: "en", children: [
     /* @__PURE__ */ jsxs("head", { children: [
       /* @__PURE__ */ jsx(Meta, {}),
       /* @__PURE__ */ jsx(Links, {})
@@ -476,6 +479,7 @@ function App() {
 const route0 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: App,
+  headers,
   links,
   meta
 }, Symbol.toStringTag, { value: "Module" }));
@@ -1529,6 +1533,7 @@ function PackSelector() {
       /* @__PURE__ */ jsxs(
         "select",
         {
+          "aria-label": "Magic Set",
           className: "m-1 grow rounded",
           id: "set",
           name: "set",
@@ -1549,6 +1554,7 @@ function PackSelector() {
       /* @__PURE__ */ jsx(
         "select",
         {
+          "aria-label": "Booster Type",
           className: "m-1 grow rounded",
           id: "pack-type",
           name: "pack-type",
@@ -1582,7 +1588,7 @@ function Instructions() {
         /* @__PURE__ */ jsxs("li", { className: "mb-2", children: [
           /* @__PURE__ */ jsx("span", { className: "italic", children: "2)" }),
           " ",
-          /* @__PURE__ */ jsx("span", { className: "text-green-600 font-bold", children: "FLIP" }),
+          /* @__PURE__ */ jsx("span", { className: "text-green-600 font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]", children: "FLIP" }),
           " a card face up and ",
           /* @__PURE__ */ jsx("span", { className: "underline decoration-dashed decoration-green-500", children: "keep" }),
           " it."
@@ -1590,7 +1596,7 @@ function Instructions() {
         /* @__PURE__ */ jsxs("li", { className: "mb-2", children: [
           /* @__PURE__ */ jsx("span", { className: "italic", children: "3)" }),
           " ",
-          /* @__PURE__ */ jsx("span", { className: "text-red-800 font-bold", children: "RIP" }),
+          /* @__PURE__ */ jsx("span", { className: "text-red-800 font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]", children: "RIP" }),
           " a card and ",
           /* @__PURE__ */ jsx("span", { className: "underline decoration-solid decoration-red-700", children: "destroy" }),
           " it forever."
@@ -1613,7 +1619,7 @@ async function loader$1() {
   const start = Date.now();
   const response = await fetch("https://d3vjinhen5j20w.cloudfront.net/PACK_TYPES_BY_SET.json").then(async (res) => {
     const data = await res.json();
-    return data.body;
+    return data;
   });
   invariant(response, "Missing data from scryfall");
   const duration = performance.now() - start_perf;
@@ -2120,7 +2126,7 @@ const route11 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.definePrope
   default: Open,
   loader
 }, Symbol.toStringTag, { value: "Module" }));
-const serverManifest = { "entry": { "module": "/assets/entry.client-CWF3EnNN.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/components-YI_IdiTz.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/root-Bvj29x57.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/components-YI_IdiTz.js", "/assets/centsToDollars-BemH1-NO.js", "/assets/FIORIContext-B_fc8As3.js", "/assets/HomeButton-BbFWqNW7.js"], "css": [] }, "routes/resources.packs": { "id": "routes/resources.packs", "parentId": "root", "path": "resources/packs", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/resources.packs-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/resources.sets": { "id": "routes/resources.sets", "parentId": "root", "path": "resources/sets", "index": void 0, "caseSensitive": void 0, "hasAction": true, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/resources.sets-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/sitemap[.]xml": { "id": "routes/sitemap[.]xml", "parentId": "root", "path": "sitemap.xml", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/sitemap_._xml-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/robots[.]txt": { "id": "routes/robots[.]txt", "parentId": "root", "path": "robots.txt", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/robots_._txt-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/stats.global": { "id": "routes/stats.global", "parentId": "root", "path": "stats/global", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/stats.global-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/stats._index": { "id": "routes/stats._index", "parentId": "root", "path": "stats", "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/stats._index-kzf6nVKu.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/centsToDollars-BemH1-NO.js", "/assets/HomeButton-BbFWqNW7.js", "/assets/FIORIContext-B_fc8As3.js"], "css": [] }, "routes/stats.user": { "id": "routes/stats.user", "parentId": "root", "path": "stats/user", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/stats.user-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/settings": { "id": "routes/settings", "parentId": "root", "path": "settings", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/settings-Cqmo3WfK.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/HomeButton-BbFWqNW7.js", "/assets/FIORIContext-B_fc8As3.js"], "css": [] }, "routes/_index": { "id": "routes/_index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/_index-CtzfQ06d.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/components-YI_IdiTz.js"], "css": [] }, "routes/info": { "id": "routes/info", "parentId": "root", "path": "info", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/info-etz5tnfk.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/HomeButton-BbFWqNW7.js", "/assets/FIORIContext-B_fc8As3.js"], "css": [] }, "routes/open": { "id": "routes/open", "parentId": "root", "path": "open", "index": void 0, "caseSensitive": void 0, "hasAction": true, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": true, "module": "/assets/open-CzcskFmW.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/centsToDollars-BemH1-NO.js", "/assets/FIORIContext-B_fc8As3.js", "/assets/components-YI_IdiTz.js"], "css": [] } }, "url": "/assets/manifest-13eef4ec.js", "version": "13eef4ec" };
+const serverManifest = { "entry": { "module": "/assets/entry.client-CWF3EnNN.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/components-YI_IdiTz.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/root-ByJjEJOH.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/components-YI_IdiTz.js", "/assets/centsToDollars-BemH1-NO.js", "/assets/FIORIContext-B_fc8As3.js", "/assets/HomeButton-BbFWqNW7.js"], "css": [] }, "routes/resources.packs": { "id": "routes/resources.packs", "parentId": "root", "path": "resources/packs", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/resources.packs-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/resources.sets": { "id": "routes/resources.sets", "parentId": "root", "path": "resources/sets", "index": void 0, "caseSensitive": void 0, "hasAction": true, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/resources.sets-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/sitemap[.]xml": { "id": "routes/sitemap[.]xml", "parentId": "root", "path": "sitemap.xml", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/sitemap_._xml-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/robots[.]txt": { "id": "routes/robots[.]txt", "parentId": "root", "path": "robots.txt", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/robots_._txt-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/stats.global": { "id": "routes/stats.global", "parentId": "root", "path": "stats/global", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/stats.global-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/stats._index": { "id": "routes/stats._index", "parentId": "root", "path": "stats", "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/stats._index-kzf6nVKu.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/centsToDollars-BemH1-NO.js", "/assets/HomeButton-BbFWqNW7.js", "/assets/FIORIContext-B_fc8As3.js"], "css": [] }, "routes/stats.user": { "id": "routes/stats.user", "parentId": "root", "path": "stats/user", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/stats.user-l0sNRNKZ.js", "imports": [], "css": [] }, "routes/settings": { "id": "routes/settings", "parentId": "root", "path": "settings", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/settings-Cqmo3WfK.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/HomeButton-BbFWqNW7.js", "/assets/FIORIContext-B_fc8As3.js"], "css": [] }, "routes/_index": { "id": "routes/_index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/_index-DXlr6-eu.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/components-YI_IdiTz.js"], "css": [] }, "routes/info": { "id": "routes/info", "parentId": "root", "path": "info", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/info-etz5tnfk.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/HomeButton-BbFWqNW7.js", "/assets/FIORIContext-B_fc8As3.js"], "css": [] }, "routes/open": { "id": "routes/open", "parentId": "root", "path": "open", "index": void 0, "caseSensitive": void 0, "hasAction": true, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": true, "module": "/assets/open-CzcskFmW.js", "imports": ["/assets/index-Ivv8m7sf.js", "/assets/centsToDollars-BemH1-NO.js", "/assets/FIORIContext-B_fc8As3.js", "/assets/components-YI_IdiTz.js"], "css": [] } }, "url": "/assets/manifest-12517120.js", "version": "12517120" };
 const mode = "production";
 const assetsBuildDirectory = "build\\client";
 const basename = "/";

@@ -23,10 +23,10 @@ export default function Instructions() {
             <span className="italic">1)</span> Open a pack of cards, shuffle them face down.
           </li>
           <li className="mb-2">
-            <span className="italic">2)</span> <span className="text-green-600 font-bold">FLIP</span> a card face up and <span className="underline decoration-dashed decoration-green-500">keep</span> it.
+            <span className="italic">2)</span> <span className="text-green-600 font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">FLIP</span> a card face up and <span className="underline decoration-dashed decoration-green-500">keep</span> it.
           </li>
           <li className="mb-2">
-            <span className="italic">3)</span> <span className="text-red-800 font-bold">RIP</span> a card and <span className="underline decoration-solid decoration-red-700">destroy</span> it forever.
+            <span className="italic">3)</span> <span className="text-red-800 font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">RIP</span> a card and <span className="underline decoration-solid decoration-red-700">destroy</span> it forever.
           </li>
           <li className="mb-2">
             <span className="italic">4)</span> Repeat 2 and 3 until all cards are gone.

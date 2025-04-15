@@ -27,7 +27,7 @@ export default function PackSelector() {
     <Form action="/open" method="get" className=''>
       <div className="grid grid-cols-3 h-24 w-72">
         <div className='col-span-2 flex flex-col flex-shrink-1'>
-          <select className='m-1 grow rounded'
+          <select aria-label="Magic Set" className='m-1 grow rounded'
             id="set"
             name="set"
             defaultValue='-'
@@ -38,7 +38,7 @@ export default function PackSelector() {
             <option key="-" disabled value="-">Pick a Magic Set!</option>
             {setKeys.map((set: any) => (<option key={set} value={set}>{set} - {apiData[set]["name"]}</option>))}
           </select>
-          <select className='m-1 grow rounded'
+          <select aria-label="Booster Type" className='m-1 grow rounded'
             id="pack-type"
             name="pack-type"
             disabled={selectedSet === ""}>

@@ -1,4 +1,4 @@
-import { LinksFunction } from "@remix-run/node";
+import { HeadersFunction, LinksFunction } from "@remix-run/node";
 import {
   Links,
   Meta,
@@ -63,6 +63,10 @@ export const links: LinksFunction = () => [
   
 ];
 
+export const headers: HeadersFunction = () => ({
+  "Cache-Control": "max-age=300, s-maxage=3600",
+});
+
 export const meta = () => {
   return [
     { title: "Flip It or Rip It" },
@@ -89,7 +93,7 @@ export default function App() {
   }
 
   return (
-    <html>
+    <html lang="en">
       <head >
         <Meta />
         <Links />
